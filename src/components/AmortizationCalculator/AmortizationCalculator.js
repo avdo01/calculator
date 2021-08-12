@@ -3,12 +3,13 @@ import logo from '../photos/Calendarr.svg';
 import './amortizationCalculator.css';
 
 const AmortizationCalculator = () => {
-    const [loanAmount, setLoanAmount] = useState(0);
-    const [loanYears, setLoanYears] = useState(0);
-    const [loanMonths, setLoanMonths] = useState(0);
-    const [interestRate, setInterestRate] = useState(0);
+    const [loanAmount, setLoanAmount] = useState();
+    const [loanYears, setLoanYears] = useState();
+    const [loanMonths, setLoanMonths] = useState();
+    const [interestRate, setInterestRate] = useState();
     const [payment, setPayment] = useState(0);
     const [totalInterest, setTotalInterest] = useState(0);
+    const [disabled, setDisabled] = useState(false);
 
     useEffect(() => {
         setLoanMonths(loanYears * 12);
@@ -39,10 +40,12 @@ const AmortizationCalculator = () => {
                     <div className='inputs'>
                         <h2>Loan amount</h2>
                         <input type='number' value={loanAmount} onChange={(e) => setLoanAmount(parseFloat(e.target.value))} />
+                        {loanAmount < 1000 || loanAmount > 999999 ? <div className='invalid'>Invalid value</div> : null}
                     </div>
                     <div className='inputs'>
                         <h2>Loan term in years</h2>
                         <input type='number' value={loanYears} onChange={(e) => setLoanYears(parseFloat(e.target.value))} />
+                        {loanYears > 40 ? <div className='invalid'>Invalid value</div> : null}
                     </div>
                 </div>
                 <div className='left-am-line'>
@@ -54,10 +57,12 @@ const AmortizationCalculator = () => {
                     <div className='inputs'>
                         <h2>Loan term in months</h2>
                         <input type='number' value={loanMonths} onChange={(e) => setLoanMonths(parseFloat(e.target.value))} />
+                        {loanMonths > 480 ? <div className='invalid'>Invalid value</div> : null}
                     </div>
                     <div className='inputs'>
                         <h2>Interest rate per year</h2>
                         <input type='number' value={interestRate} onChange={(e) => setInterestRate(parseFloat(e.target.value))} />
+                        {interestRate > 99 ? <div className='invalid'>Invalid value</div> : null}
                     </div>
                 </div>
                 <div className='left-am-button'>
@@ -80,7 +85,7 @@ const AmortizationCalculator = () => {
                         <div className='right-totals-text'>
                             Total Principal Paid
                         </div>
-                        <div className='right-totals-text'>
+                        <div className='right-totals-number'>
                             ${loanAmount ? loanAmount : 0}
                         </div>
                     </div>
@@ -89,7 +94,7 @@ const AmortizationCalculator = () => {
                         <div className='right-totals-text'>
                             Total Interest Paid
                         </div>
-                        <div className='right-totals-text' style={{ paddingLeft: '8px' }}>
+                        <div className='right-totals-number' style={{ paddingLeft: '8px' }}>
                             ${totalInterest ? totalInterest.toFixed(2) : 0}
                         </div>
                     </div>

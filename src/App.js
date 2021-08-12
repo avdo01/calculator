@@ -1,3 +1,5 @@
+import React from 'react';
+import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 import './App.css';
 import AmortizationCalculator from './components/AmortizationCalculator/AmortizationCalculator';
 import MortgageCalculator from './components/MortgageCalculator/MortgageCalculator';
@@ -6,9 +8,12 @@ import MortgageCalculator from './components/MortgageCalculator/MortgageCalculat
 function App() {
   return (
     <div className="App">
-      <AmortizationCalculator />
-      <br />
-      <MortgageCalculator />
+      <Router>
+        <Switch>
+          <Route exact path='/calculator1' component={MortgageCalculator} />
+          <Route exact path='/calculator2' component={AmortizationCalculator} />
+        </Switch>
+      </Router>
     </div>
   );
 }
