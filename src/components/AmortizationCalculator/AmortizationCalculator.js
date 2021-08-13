@@ -12,6 +12,15 @@ const AmortizationCalculator = () => {
     const [disabled, setDisabled] = useState(false);
 
     useEffect(() => {
+        if (loanAmount < 1000 || loanAmount > 999999 || loanMonths > 480 || loanYears > 40 || interestRate > 99) {
+            setDisabled(true);
+        }
+        else {
+            setDisabled(false);
+        }
+    }, [loanYears, loanMonths, loanAmount, interestRate]);
+
+    useEffect(() => {
         setLoanMonths(loanYears * 12);
     }, [loanYears]);
 
@@ -40,12 +49,12 @@ const AmortizationCalculator = () => {
                     <div className='inputs'>
                         <h2>Loan amount</h2>
                         <input type='number' value={loanAmount} onChange={(e) => setLoanAmount(parseFloat(e.target.value))} />
-                        {loanAmount < 1000 || loanAmount > 999999 ? <div className='invalid'>Invalid value</div> : null}
+                        {loanAmount < 1000 || loanAmount > 999999 ? <div className='invalid'>Minimum value: $1000<br />Maximum value: $999999</div> : null}
                     </div>
                     <div className='inputs'>
                         <h2>Loan term in years</h2>
                         <input type='number' value={loanYears} onChange={(e) => setLoanYears(parseFloat(e.target.value))} />
-                        {loanYears > 40 ? <div className='invalid'>Invalid value</div> : null}
+                        {loanYears > 40 ? <div className='invalid'>Maximum years: 40</div> : null}
                     </div>
                 </div>
                 <div className='left-am-line'>
@@ -57,16 +66,17 @@ const AmortizationCalculator = () => {
                     <div className='inputs'>
                         <h2>Loan term in months</h2>
                         <input type='number' value={loanMonths} onChange={(e) => setLoanMonths(parseFloat(e.target.value))} />
-                        {loanMonths > 480 ? <div className='invalid'>Invalid value</div> : null}
+                        {loanMonths > 480 ? <div className='invalid'>Maximum months: 480</div> : null}
+
                     </div>
                     <div className='inputs'>
                         <h2>Interest rate per year</h2>
                         <input type='number' value={interestRate} onChange={(e) => setInterestRate(parseFloat(e.target.value))} />
-                        {interestRate > 99 ? <div className='invalid'>Invalid value</div> : null}
+                        {interestRate > 99 || interestRate < 1 ? <div className='invalid'>Minimum rate: 1<br />Maximum rate: 99</div> : null}
                     </div>
                 </div>
                 <div className='left-am-button'>
-                    <button onClick={() => handleClick()}>Calculate</button>
+                    <button disabled={disabled} onClick={() => handleClick()}>Calculate</button>
                     <h2>Show amortization schedule</h2>
                     <img src={logo} alt='calendar-logo' />
                 </div>
