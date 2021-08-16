@@ -332,7 +332,7 @@ input[type=number]::placeholder{
   .main-wrapper-am{
     overflow: hidden;
     width: 100%;
-    height: 110vh;
+    height: 150vh;
     display: flex;
     flex-direction: row;
   }
