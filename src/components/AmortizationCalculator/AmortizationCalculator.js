@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import logo from '../photos/Calendarr.svg';
+import logo from '../photos/coolicon.png';
 import './amortizationCalculator.css';
 
 const AmortizationCalculator = () => {
