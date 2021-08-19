@@ -1,6 +1,12 @@
 @import url('https://fonts.googleapis.com/css2?family=Raleway:wght@300&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=Raleway:wght@300&display=swap');
 
+.main{
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+}
+
 .main-wrapper-am{
   display: flex;
   flex-direction: row;

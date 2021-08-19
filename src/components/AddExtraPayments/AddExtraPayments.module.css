@@ -1,0 +1,211 @@
+@import url('https://fonts.googleapis.com/css2?family=Raleway:wght@300&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=Raleway:wght@300&display=swap');
+
+.mainWrapper{
+    display: flex;
+    flex-direction: column;
+    border-top: 2px solid #A3915D;
+    border-right: 2px solid #353535;
+    background: #353535;
+    width: 100%;
+    justify-content: space-between;
+    overflow: hidden;
+}
+
+.up{
+    display: flex;
+    flex-direction: row;
+    background: #353535;
+    width: 100%;
+    height: 81px;
+    justify-content: space-between;
+}
+
+.leftContent{
+    display: flex;
+    align-items: center;
+    margin-left: 160px;
+}
+
+.leftContentText{
+    font-family: Raleway;
+    font-style: normal;
+    font-weight: bold;
+    font-size: 22px;
+    line-height: 31px;
+    text-transform: capitalize;
+    color: #948456;  
+}
+
+.rightContent{
+    display: flex;
+    align-items: center;
+    margin-right: 165px;
+}
+
+.plus{
+    height: 20px;
+    width: 20px;
+}
+
+.minus{
+    width: 20px;
+    margin-bottom: 7px;
+}
+
+.down{
+    display: flex;
+    flex-direction: column;
+    width: 1440px;
+    margin-top: 20px;
+    padding-left: 160px;
+}
+
+.downInput{
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    gap: 15px;
+    margin-top: 30px;
+    border: 1px sloid white;
+}
+
+.downText{
+    display: flex;
+    flex-direction: column;
+    background: #353535;
+    width: 521px;
+}
+
+.downTextContent{
+    font-family: Raleway;
+    font-style: normal;
+    font-weight: normal;
+    font-size: 16px;
+    line-height: 26px;
+    color: #F6F6F6;
+}
+
+.inputText{
+    font-family: Raleway;
+    font-style: normal;
+    font-weight: bold;
+    font-size: 20px;
+    line-height: 23px;
+    color: #F6F6F6;
+}
+
+.inputs{
+    display: flex;
+    flex-direction: row;
+    gap: 15px;
+}
+
+.inputs input{
+    width: 344px;
+    height: 56px;
+    background: #F6F4F0;
+    border: 1px solid #B7B7B7;
+    box-sizing: border-box;
+    border-radius: 3px;
+}
+
+.inputs select{
+    width: 298px;
+    height: 56px;
+    background: #F6F4F0;
+    border: 1px solid #B7B7B7;
+    box-sizing: border-box;
+    border-radius: 3px;
+    color: #B7B7B7;
+}
+
+.downButton{
+    margin-top: 50px;
+    margin-bottom: 50px;
+}
+
+.downButton button{
+    padding: 8px 32px;
+    width: 345px;
+    height: 56px;
+    background: #A3915D;
+    border-radius: 3px;
+    font-family: Raleway;
+    font-style: normal;
+    font-weight: normal;
+    font-size: 18px;
+    line-height: 21px;
+    text-transform: capitalize;
+    color: #E5E5E5;
+}
+
+@media all and (min-width: 280px) and (max-width: 767px){
+    .mainWrapper{
+        overflow: hidden;
+        width: 100%;
+    }
+    .leftContent{
+        margin-left: 10px;
+    }
+    .rightContent{
+        margin-right: 10px;
+    }
+    .down{
+        padding-left: 10px;
+    }
+    .downText{
+        width: 290px;
+    }
+    .inputs{
+        display: flex;
+        flex-direction: column;
+    }
+    .inputText{
+        width: 290px;
+    }
+    .downButton button{
+        width: 298px;
+    }
+}
+
+@media all and (min-width: 768px) and (max-width: 900px){
+    .mainWrapper{
+        overflow: hidden;
+        width: 100%;
+    }
+    .down{
+        display: flex;
+        width: 100%;
+        align-items: center;
+    }
+    .leftContent{
+        margin-left: 25px;
+    }
+    .rightContent{
+        margin-right: 25px;
+    }
+    .down{
+        padding-left: 0px;
+    }
+    .downInput{
+        padding-left: 0px;
+        align-items: center;
+    }
+    .downText{
+        width: 510px;
+    }
+    .inputs{
+        display: flex;
+        flex-direction: column;
+    }
+    .inputs input{
+        width: 900px;
+    }
+    .inputText{
+        width: 510px;
+    }
+    .downButton button{
+        width: 298px;
+    }
+}
