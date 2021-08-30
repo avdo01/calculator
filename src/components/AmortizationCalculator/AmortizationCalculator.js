@@ -79,7 +79,7 @@ const AmortizationCalculator = () => {
                     </div>
                     <div className='left-am-button'>
                         <button disabled={disabled} onClick={() => handleClick()}>Calculate</button>
-                        <h2>Show amortization schedule</h2>
+                        <a><h2>Show amortization schedule</h2></a>
                         <img src={logo} alt='calendar-logo' />
                     </div>
                 </div>

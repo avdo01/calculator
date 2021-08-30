@@ -7,6 +7,12 @@ const AddExtraPayments = () => {
     const months = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
     const years = [2021, 2022, 2023, 2024, 2025, 2026, 2027, 2028, 2029, 2030, 2031, 2032, 2033, 2034];
     const [isOpen, setIsOpen] = useState(false);
+    const [amountMonthly, setAmountMonthly] = useState(0);
+    const [extraYearly, setExtraYearly] = useState(0);
+    const [extraYearlyMonth, setExtraYearlyMonth] = useState('');
+    const [oneTime, setOneTime] = useState(0);
+    const [oneTimeMonth, setOneTimeMonth] = useState(0);
+    const [oneTimeYear, setOneTimeYear] = useState(0);
     const handleClick = () => {
         setIsOpen(!isOpen);
     }

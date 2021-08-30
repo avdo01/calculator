@@ -87,6 +87,10 @@
   color: #A3915D;
 }
 
+.left-am-button a{
+  cursor: pointer;
+}
+
 .left-am-button button{
   padding: 8px 32px;
   width: 198px;
