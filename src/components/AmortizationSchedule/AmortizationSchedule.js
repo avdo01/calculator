@@ -6,7 +6,7 @@ import { nameOfMonths, nameOfMonthsShortcut } from '../Mocks/mockData';
 const AmortizationSchedule = ({ loanYears, loanMonths, payment, interestRate, loanAmount }) => {
     const [currentDate, setCurrentDate] = useState();
     const [futureDate, setFutureDate] = useState();
-    const [numberOfMonths, setNumberOfMonths] = useState(0);
+    // const [numberOfMonths, setNumberOfMonths] = useState(0);
     const nullVar = 0;
 
     useEffect(() => {
@@ -27,7 +27,7 @@ const AmortizationSchedule = ({ loanYears, loanMonths, payment, interestRate, lo
     }
 
     const currentMonth = () => {
-        var today = new Date;
+        var today = new Date();
         return today.getMonth() + 1;
     }
 
@@ -41,27 +41,19 @@ const AmortizationSchedule = ({ loanYears, loanMonths, payment, interestRate, lo
         var counter = currentMonth() + 1;
         var counterYears = currentYear();
         var paymentt = payment.toFixed(2);
-        // var startBalance = loanAmount;
         var interest = interestPerMounth(interestRate, loanAmount);
         var principal = (payment - interest);
         var balance = (loanAmount - principal);
-        // console.log('-----', parseFloat(paymentt) - parseFloat(interest));
         var totalInt = parseFloat(interest);
         for (var i = 0; i < loanMonths; i++) {
             tableRows.push(
                 <tr className={styles.TableRow}>
-                    {/* <th className={styles.BodyOne}>{nameOfMonthsShortcut[counter - 1]} {counterYears}</th>
-                    <th className={styles.BodyTwo}>${payment.toFixed(2)}</th>
-                    <th className={styles.BodyThree}>${(payment - interestPerMounth(interestRate, 5000)).toFixed(2)}</th>
-                    <th className={styles.BodyFour}>${interestPerMounth(interestRate, 5000).toFixed(2)}</th>
-                    <th className={styles.BodyFive}>${interest}</th>
-                    <th className={styles.BodySix}>{balance}</th> */}
                     <th className={styles.BodyOne}>{nameOfMonthsShortcut[counter - 1]} {counterYears}</th>
                     <th className={styles.BodyTwo}>${paymentt}</th>
-                    <th className={styles.BodyThree}>${principal.toFixed(2)}</th>
-                    <th className={styles.BodyFour}>${interest.toFixed(2)}</th>
-                    <th className={styles.BodyFive}>${totalInt.toFixed(2)}</th>
-                    <th className={styles.BodySix}>${balance < 0 ? nullVar.toFixed(2) : balance.toFixed(2)}</th>
+                    <th className={styles.BodyThree}>${Number.isNaN(principal) === false ? principal.toFixed(2) : nullVar.toFixed(2)}</th>
+                    <th className={styles.BodyFour}>${Number.isNaN(interest) === false ? interest.toFixed(2) : nullVar.toFixed(2)}</th>
+                    <th className={styles.BodyFive}>${Number.isNaN(totalInt) === false ? totalInt.toFixed(2) : nullVar.toFixed(2)}</th>
+                    <th className={styles.BodySix}>${balance < 0 || Number.isNaN(balance) === true ? nullVar.toFixed(2) : balance.toFixed(2)}</th>
                 </tr>
             )
             interest = interestPerMounth(interestRate, balance);
@@ -93,7 +85,7 @@ const AmortizationSchedule = ({ loanYears, loanMonths, payment, interestRate, lo
             setFutureDate((nameOfMonths[future.getMonth() + 1]) + ' ' + (future.getDate()) + ', ' + (future.getFullYear()));
         }
         else if (yearsOrMonths === 'nan') {
-            var today = new Date();
+            // var today = new Date();
             let fut = (nameOfMonths[today.getMonth()]) + ' ' + (today.getDate()) + ', ' + (today.getFullYear());
             setFutureDate(fut);
         }
