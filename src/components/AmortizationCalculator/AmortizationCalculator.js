@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import AddExtraPayments from '../AddExtraPayments/AddExtraPayments';
+import AmortizationSchedule from '../AmortizationSchedule/AmortizationSchedule';
 import logo from '../photos/coolicon1.png';
 import './amortizationCalculator.css';
 
@@ -11,6 +12,7 @@ const AmortizationCalculator = () => {
     const [payment, setPayment] = useState(0);
     const [totalInterest, setTotalInterest] = useState(0);
     const [disabled, setDisabled] = useState(false);
+    const [amScheduleOpen, setAmScheduleOpen] = useState(false);
 
     useEffect(() => {
         if (loanAmount < 1000 || loanAmount > 999999 || loanMonths > 480 || loanYears > 40 || interestRate > 99) {
@@ -31,6 +33,16 @@ const AmortizationCalculator = () => {
 
     const totalInterestt = (value, loanMonths, loanAmount) => {
         return (value * loanMonths) - loanAmount;
+    }
+
+    const amScheduleToggle = () => {
+        setAmScheduleOpen(!amScheduleOpen);
+    }
+
+    const getDate = () => {
+        var today = new Date();
+        var date = (today.getMonth() + 1) + '/' + today.getDate() + '/' + today.getFullYear();
+        console.log(date);
     }
 
     const handleClick = () => {
@@ -79,7 +91,11 @@ const AmortizationCalculator = () => {
                     </div>
                     <div className='left-am-button'>
                         <button disabled={disabled} onClick={() => handleClick()}>Calculate</button>
-                        <a><h2>Show amortization schedule</h2></a>
+                        {!amScheduleOpen ?
+                            <a onClick={() => amScheduleToggle()}><h2>Show amortization schedule</h2></a>
+                            :
+                            <a onClick={() => amScheduleToggle()}><h2>Hide amortization schedule</h2></a>
+                        }
                         <img src={logo} alt='calendar-logo' />
                     </div>
                 </div>
@@ -114,6 +130,7 @@ const AmortizationCalculator = () => {
                 </div>
             </div>
             <AddExtraPayments />
+            {amScheduleOpen ? <AmortizationSchedule loanYears={loanYears} loanMonths={loanMonths} payment={payment} interestRate={interestRate} loanAmount={loanAmount} /> : null}
         </div>
     )
 }

@@ -1,0 +1,306 @@
+@import url('https://fonts.googleapis.com/css2?family=Raleway:wght@300&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=Raleway:wght@300&display=swap');
+
+
+.MainWrapper{
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    /* height: 1432px; */
+    background-color: rgba(242, 239, 231, 1);
+    justify-content: center;
+    align-items: center;
+    padding-top: 60px;
+    padding-bottom: 60px;
+}
+
+.CentralWrapper{
+    display: flex;
+    flex-direction: column;
+    /* height: 1000px; */
+    width: 70%;
+    background-color: white;
+    border-top: 1px solid #A3915D;
+    padding: 120px 148px 120px 149px;
+}
+
+.Date{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
+.StartDateDiv{
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.StartDateDivText{
+    font-family: Raleway;
+    font-style: normal;
+    font-weight: bold;
+    font-size: 20px;
+    line-height: 23px;
+    color: #262626;   
+}
+
+.StartDateDiv input{
+    background: #F6F4F0;
+    border: 1px solid #B7B7B7;
+    box-sizing: border-box;
+    border-radius: 3px;
+    font-family: Raleway;
+    font-style: normal;
+    font-weight: normal;
+    font-size: 14px;
+    line-height: 16px;
+    text-transform: capitalize;
+    font-feature-settings: 'pnum' on, 'lnum' on;
+    color: #262626;
+}
+
+.EstimatedDate{
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.EstimatedDateText{
+    font-family: Raleway;
+    font-style: normal;
+    font-weight: normal;
+    font-size: 20px;
+    line-height: 23px;
+    color: #A3915D;
+}
+
+.EstimatedDateEnd{
+    font-family: DM Serif Display;
+    font-style: normal;
+    font-weight: normal;
+    font-size: 37px;
+    line-height: 51px;    
+    letter-spacing: -0.01em;
+    text-transform: capitalize;
+    color: #000000;
+}
+
+.Title{
+    display: flex;
+    margin-top: 60px;
+    font-family: DM Serif Display;
+    font-style: normal;
+    font-weight: normal;
+    font-size: 37px;
+    line-height: 51px;
+    letter-spacing: -0.01em;
+    text-transform: capitalize;
+    color: #A3915D;
+}
+
+.Table{
+    display: flex;
+    flex-direction: column;
+    margin-top: 40px;
+}
+
+.Table thead{
+    /* border-bottom: 1px solid black; */
+    font-family: Raleway;
+    font-style: normal;
+    font-weight: normal;
+    font-size: 14px;
+    line-height: 160%;
+    text-align: center;
+    text-transform: capitalize;
+    color: #262626;
+}
+
+.Table tbody{
+    margin-top: 10px;
+    border-bottom: 1px solid green;
+}
+
+.HeadOne{
+    width: 200px;
+    text-align: left;
+}
+.HeadTwo{
+    width: 160px;
+}
+.HeadThree{
+    width: 160px;
+}
+.HeadFour{
+    width: 160px;
+}
+.HeadFive{
+    width: 160px;
+}
+.HeadSix{
+    width: 160px;
+    text-align: right;
+}
+
+.BodyOne{
+    width: 200px;
+    text-align: left;
+    border-top: 1px solid green;
+    padding-top: 5px;
+    padding-bottom: 5px;
+}
+.BodyTwo{
+    width: 160px;
+    border-top: 1px solid green;
+    padding-top: 5px;
+    padding-bottom: 5px;
+}
+.BodyThree{
+    width: 160px;
+    border-top: 1px solid green;
+    padding-top: 15px;
+    padding-bottom: 15px;
+}
+.BodyFour{
+    width: 160px;
+    border-top: 1px solid green;
+    padding-top: 15px;
+    padding-bottom: 15px;
+}
+.BodyFive{
+    width: 160px;
+    border-top: 1px solid green;
+    padding-top: 15px;
+    padding-bottom: 15px;
+}
+.BodySix{
+    width: 160px;
+    text-align: right;
+    border-top: 1px solid green;
+    padding-top: 15px;
+    padding-bottom: 15px;
+}
+
+
+.Print{
+    display: flex;
+    flex-direction: row;
+    gap: 5px;
+    margin-top: 91px;
+    justify-content: flex-end;
+}
+
+.PrintText{
+    font-family: Raleway;
+    font-style: normal;
+    font-weight: bold;
+    font-size: 20px;
+    line-height: 23px;
+    color: #A3915D;
+}
+
+.PrintImage img{
+    width: 18px;
+    height: 22px;
+}
+
+@media all and (min-width: 280px) and (max-width: 426px){
+    .MainWrapper{
+        display: flex;
+        overflow: hidden;
+        width: 100%;
+    }
+    .CentralWrapper{
+        display: flex;
+        width: 90%;
+        padding: 20px 0px 0px 0px;
+        align-items: center;
+    }
+    .Date{
+        display: flex;
+        flex-direction: column;
+        gap: 20px;
+    }
+    .Title{
+        text-align: center;
+    }
+    .Table{
+        width: 100%;
+    }
+    .StartDateDivInput{
+        width: 90%;
+    }
+    .StartDateDivInput input{
+        width: 100%;
+    }
+}
+
+@media all and (min-width: 768px) and (max-width: 1023px){
+    .MainWrapper{
+        display: flex;
+        overflow: hidden;
+        width: 100%;
+    }
+    .CentralWrapper{
+        display: flex;
+        width: 90%;
+        padding: 20px 0px 0px 0px;
+        align-items: center;
+    }
+    .Date{
+        display: flex;
+        flex-direction: row;
+        gap: 20px;
+    }
+    .Title{
+        text-align: center;
+    }
+    .Table{
+        width: 100%;
+    }
+    .StartDateDivInput input{
+        width: 99%;
+    }
+}
+
+@media all and (min-width: 1024px) and (max-width: 1439px){
+    .MainWrapper{
+        display: flex;
+        overflow: hidden;
+        width: 100%;
+    }
+    .CentralWrapper{
+        display: flex;
+        width: 90%;
+        padding: 20px 20px 0px 20px;
+        align-items: center;
+    }
+    .Date{
+        display: flex;
+        flex-direction: row;
+        width: 100%;
+    }
+    .StartDateDiv{
+        display: flex;
+        justify-content: flex-start;
+    }
+    .EstimatedDate{
+        display: flex;
+        justify-content: flex-end;
+    }
+    .Title{
+        text-align: center;
+    }
+    .Table{
+        width: 100%;
+    }
+    .StartDateDivInput input{
+        width: 99%;
+    }
+    .Print{
+        display: flex;
+        justify-content: flex-end;
+        width: 100%;
+    }
+}
