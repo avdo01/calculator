@@ -1,13 +1,22 @@
 import React, { useState, useEffect } from 'react';
 import styles from './AmortizationSchedule.module.css';
 import logo from '../photos/forPrint.png';
-import { nameOfMonths, nameOfMonthsShortcut } from '../Mocks/mockData';
+import { getMonthIndex, nameOfMonths, nameOfMonthsShortcut } from '../Mocks/mockData';
 
-const AmortizationSchedule = ({ loanYears, loanMonths, payment, interestRate, loanAmount }) => {
+const AmortizationSchedule = ({ loanYears, loanMonths, payment, interestRate, loanAmount, addMonthlyPayment, everyMounthAmount, everyMounthIndex, everyMounthName, oneTimeAmount, oneTimeMonth, oneTimeYear }) => {
     const [currentDate, setCurrentDate] = useState();
     const [futureDate, setFutureDate] = useState();
-    // const [numberOfMonths, setNumberOfMonths] = useState(0);
+    var totalInterestVar = 0;
     const nullVar = 0;
+    const currentMonthIndex = everyMounthIndex + 1;
+    var previousMonthIndex;
+    if (currentMonthIndex > 1) {
+        previousMonthIndex = currentMonthIndex - 1;
+    }
+    else {
+        previousMonthIndex = 12;
+    }
+    // console.log('INDEX OF MONTH', everyMounthIndex);
 
     useEffect(() => {
         if (Number.isInteger(loanYears) === true && Number.isInteger(loanMonths) === false && (loanMonths !== 0 || loanYears !== 0)) {
@@ -20,7 +29,30 @@ const AmortizationSchedule = ({ loanYears, loanMonths, payment, interestRate, lo
             getDate('months');
             addTableRows(loanMonths);
         }
-    }, [loanYears, loanMonths]);
+        if (totalInterestVar !== 0) {
+            // console.log('TOTAL INTEREST VAR', totalInterestVar);
+        }
+    }, [loanYears, loanMonths, totalInterestVar]);
+
+    useEffect(() => {
+        const lastNumber = (paymentt, pti) => {
+            // console.log('-----POCETAK--');
+            var counter = 1;
+            for (var i = 0; i < loanMonths; i++) {
+                // console.log('variable', ((i + 1) * paymentt).toFixed(2));
+                // console.log('my', (pti - ((i + 1) * paymentt)).toFixed(2));
+                if ((pti - ((i + 1) * paymentt)).toFixed(2) > 0) {
+                    // console.log('KONACNA', (pti - ((i + 1) * paymentt)).toFixed(2));
+                    counter++;
+                }
+            }
+            // console.log('COUNTER', counter)
+            // console.log('-----KRAJ--');
+            // console.log('Last interest', (((interestRate / 100) / 12) * 358.34).toFixed(2));
+        }
+        // Ovdje trenutno unosim podatke
+        lastNumber(1096.6640076471413, 5000 + 71.15);
+    }, [])
 
     const interestPerMounth = (interestRate, pmtt) => {
         return (((interestRate / 100) / 12) * pmtt)
@@ -40,31 +72,50 @@ const AmortizationSchedule = ({ loanYears, loanMonths, payment, interestRate, lo
         var tableRows = [];
         var counter = currentMonth() + 1;
         var counterYears = currentYear();
-        var paymentt = payment.toFixed(2);
+        payment = (parseFloat(payment) + parseFloat(addMonthlyPayment));
+        // payment = parseFloat(payment) + parseFloat(totalInterestVar);
         var interest = interestPerMounth(interestRate, loanAmount);
         var principal = (payment - interest);
         var balance = (loanAmount - principal);
         var totalInt = parseFloat(interest);
         for (var i = 0; i < loanMonths; i++) {
+            if (counter === currentMonthIndex) {
+                payment = (parseFloat(payment) + parseFloat(everyMounthAmount));
+            }
             tableRows.push(
                 <tr className={styles.TableRow}>
                     <th className={styles.BodyOne}>{nameOfMonthsShortcut[counter - 1]} {counterYears}</th>
-                    <th className={styles.BodyTwo}>${paymentt}</th>
+                    <th className={styles.BodyTwo}>${Number.isNaN(payment) === false ? parseFloat(payment).toFixed(2) : nullVar.toFixed(2)}</th>
                     <th className={styles.BodyThree}>${Number.isNaN(principal) === false ? principal.toFixed(2) : nullVar.toFixed(2)}</th>
                     <th className={styles.BodyFour}>${Number.isNaN(interest) === false ? interest.toFixed(2) : nullVar.toFixed(2)}</th>
                     <th className={styles.BodyFive}>${Number.isNaN(totalInt) === false ? totalInt.toFixed(2) : nullVar.toFixed(2)}</th>
                     <th className={styles.BodySix}>${balance < 0 || Number.isNaN(balance) === true ? nullVar.toFixed(2) : balance.toFixed(2)}</th>
                 </tr>
             )
+            if (counter === currentMonthIndex) {
+                payment = (parseFloat(payment) - parseFloat(everyMounthAmount));
+            }
             interest = interestPerMounth(interestRate, balance);
             totalInt = parseFloat(parseFloat(totalInt) + parseFloat(interest));
+            if (counter === previousMonthIndex) {
+                payment = (parseFloat(payment) + parseFloat(everyMounthAmount));
+            }
             principal = (payment - interest);
-            balance = (balance - principal);
+            balance = (parseFloat(balance) - parseFloat(principal));
+            if (counter === previousMonthIndex) {
+                payment = (parseFloat(payment) - parseFloat(everyMounthAmount));
+            }
             counter++;
+            if (interest < 0) {
+                break;
+            }
             if (counter > 12) {
                 counter = 1;
                 counterYears += 1;
             }
+            // if (i === (loanMonths - 1)) {
+            //     totalInterestVar = + totalInt
+            // }
         }
         return tableRows;
     }

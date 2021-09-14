@@ -3,6 +3,7 @@ import AddExtraPayments from '../AddExtraPayments/AddExtraPayments';
 import AmortizationSchedule from '../AmortizationSchedule/AmortizationSchedule';
 import logo from '../photos/coolicon1.png';
 import './amortizationCalculator.css';
+import { getNumberOfTableRows } from '../Mocks/mockData';
 
 const AmortizationCalculator = () => {
     const [loanAmount, setLoanAmount] = useState();
@@ -13,6 +14,14 @@ const AmortizationCalculator = () => {
     const [totalInterest, setTotalInterest] = useState(0);
     const [disabled, setDisabled] = useState(false);
     const [amScheduleOpen, setAmScheduleOpen] = useState(false);
+    const [addMonthlyPayment, setAddMonthlyPayment] = useState(0);
+    const [everyMounthAmount, setEveryMounthAmount] = useState(0);
+    const [everyMounthName, setEveryMounthName] = useState('');
+    const [everyMounthIndex, setEveryMounthIndex] = useState(0);
+    const [oneTimeAmount, setOneTimeAmount] = useState(0);
+    const [oneTimeMonth, setOneTimeMonth] = useState(0);
+    const [oneTimeYear, setOneTimeYear] = useState(0);
+    const [isApplyed, setIsApplyed] = useState(false);
 
     useEffect(() => {
         if (loanAmount < 1000 || loanAmount > 999999 || loanMonths > 480 || loanYears > 40 || interestRate > 99) {
@@ -129,8 +138,32 @@ const AmortizationCalculator = () => {
                     </div>
                 </div>
             </div>
-            <AddExtraPayments />
-            {amScheduleOpen ? <AmortizationSchedule loanYears={loanYears} loanMonths={loanMonths} payment={payment} interestRate={interestRate} loanAmount={loanAmount} /> : null}
+            <AddExtraPayments
+                setAddMonthlyPayment={setAddMonthlyPayment}
+                setEveryMounthAmount={setEveryMounthAmount}
+                setEveryMounthName={setEveryMounthName}
+                setOneTimeAmount={setOneTimeAmount}
+                setOneTimeMonth={setOneTimeMonth}
+                setOneTimeYear={setOneTimeYear}
+                setIsApplyed={setIsApplyed}
+                setEveryMounthIndex={setEveryMounthIndex}
+            />
+            {amScheduleOpen &&
+                <AmortizationSchedule
+                    loanYears={loanYears}
+                    loanMonths={loanMonths}
+                    payment={payment}
+                    interestRate={interestRate}
+                    loanAmount={loanAmount}
+                    addMonthlyPayment={addMonthlyPayment}
+                    everyMounthAmount={everyMounthAmount}
+                    everyMounthName={everyMounthName}
+                    everyMounthIndex={everyMounthIndex}
+                    oneTimeAmount={oneTimeAmount}
+                    oneTimeMonth={oneTimeMonth}
+                    oneTimeYear={oneTimeYear}
+                />
+            }
         </div>
     )
 }

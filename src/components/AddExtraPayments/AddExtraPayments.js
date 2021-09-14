@@ -2,16 +2,18 @@ import React, { useState, useEffect } from 'react';
 import styles from './AddExtraPayments.module.css';
 import plus from '../photos/plus.png';
 import minus from '../photos/minus.png';
-import { monthsInYear, nameOfMonths, years } from '../Mocks/mockData';
+import { getMonthIndex, monthsInYear, nameOfMonths, years } from '../Mocks/mockData';
 
-const AddExtraPayments = () => {
+const AddExtraPayments = ({ setAddMonthlyPayment, setEveryMounthAmount, setEveryMounthName, setOneTimeAmount, setOneTimeMonth, setOneTimeYear, setEveryMounthIndex, setIsApplyed }) => {
     const [isOpen, setIsOpen] = useState(false);
-    const [amountMonthly, setAmountMonthly] = useState(0);
-    const [extraYearly, setExtraYearly] = useState(0);
-    const [extraYearlyMonth, setExtraYearlyMonth] = useState('');
-    const [oneTime, setOneTime] = useState(0);
-    const [oneTimeMonth, setOneTimeMonth] = useState(0);
-    const [oneTimeYear, setOneTimeYear] = useState(0);
+    const [clicked, setClicked] = useState(false);
+    const [addMonthlyPaymentX, setAddMonthlyPaymentX] = useState(0);
+    const [everyMounthAmountX, setEveryMounthAmountX] = useState(0);
+    const [everyMounthNameX, setEveryMounthNameX] = useState('January');
+    const [everyMounthIndexX, setEveryMounthIndexX] = useState(0);
+    const [oneTimeAmountX, setOneTimeAmountX] = useState(0);
+    const [oneTimeMonthX, setOneTimeMonthX] = useState(0);
+    const [oneTimeYearX, setOneTimeYearX] = useState(0);
     const handleClick = () => {
         setIsOpen(!isOpen);
     }
@@ -36,7 +38,7 @@ const AddExtraPayments = () => {
                     {isOpen ? <a onClick={() => handleClick()}><img className={styles.minus} src={minus} alt='minus-logo' /></a> : null}
                 </div>
             </div>
-            {isOpen ?
+            {isOpen &&
                 <div className={styles.down}>
                     <div className={styles.downText}>
                         <div className={styles.downTextContent}>
@@ -54,18 +56,40 @@ const AddExtraPayments = () => {
                             Amount to your monthly payment
                         </div>
                         <div className={styles.inputs}>
-                            <input type='number' placeholder='$'></input>
+                            <input type='number' placeholder='$' onChange={(e) => {
+                                if (e.target.value) {
+                                    setAddMonthlyPaymentX(e.target.value);
+                                }
+                                else {
+                                    setAddMonthlyPaymentX(0);
+                                }
+                            }} />
                         </div>
                         <div className={styles.inputText}>
                             Amount as an extra yearly payment occurring every:
                         </div>
                         <div className={styles.inputs}>
-                            <input type='number' placeholder='$'></input>
-                            <select>
+                            <input type='number' placeholder='$' onChange={(e) => {
+                                if (e.target.value) {
+                                    setEveryMounthAmountX(e.target.value);
+                                }
+                                else {
+                                    setEveryMounthAmountX(0)
+                                }
+                            }} />
+                            <select onChange={(e) => {
+                                if (e.target.value) {
+                                    setEveryMounthIndexX(e.target.value);
+                                    console.log('l', e.target.value);
+                                }
+                                else {
+                                    setEveryMounthIndexX(0);
+                                }
+                            }}>
                                 {
-                                    nameOfMonths.map(month => {
+                                    nameOfMonths.map((month, index) => {
                                         return (
-                                            <option>{month}</option>
+                                            <option key={index} value={index}>{month}</option>
                                         )
                                     })
                                 }
@@ -75,21 +99,21 @@ const AddExtraPayments = () => {
                             Amount as a one-time payment in:
                         </div>
                         <div className={styles.inputs}>
-                            <input type='number' placeholder='$'></input>
-                            <select>
+                            <input type='number' placeholder='$' onChange={(e) => setOneTimeAmountX(e.target.value)} />
+                            <select onChange={(e) => setOneTimeMonthX(e.target.value)}>
                                 {
-                                    nameOfMonths.map(month => {
+                                    nameOfMonths.map((month, index) => {
                                         return (
-                                            <option>{month}</option>
+                                            <option key={index}>{month}</option>
                                         )
                                     })
                                 }
                             </select>
-                            <select style={{ width: '80px' }}>
+                            <select style={{ width: '80px' }} onChange={(e) => setOneTimeYearX(e.target.value)}>
                                 {
-                                    years.map(year => {
+                                    years.map((year, index) => {
                                         return (
-                                            <option>{year}</option>
+                                            <option key={index}>{year}</option>
                                         )
                                     })
                                 }
@@ -97,9 +121,18 @@ const AddExtraPayments = () => {
                         </div>
                     </div>
                     <div className={styles.downButton}>
-                        <button>Apply Extra Payments</button>
+                        <button onClick={() => {
+                            setAddMonthlyPayment(addMonthlyPaymentX);
+                            setEveryMounthAmount(everyMounthAmountX);
+                            setEveryMounthName(nameOfMonths[everyMounthIndexX]);
+                            setOneTimeAmount(oneTimeAmountX);
+                            setOneTimeMonth(oneTimeMonthX);
+                            setOneTimeYear(oneTimeYearX);
+                            setEveryMounthIndex(everyMounthIndexX);
+                            setClicked(!clicked);
+                        }}>Apply Extra Payments</button>
                     </div>
-                </div> : null
+                </div>
             }
         </div>
     )
