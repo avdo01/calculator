@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import styles from './AddExtraPayments.module.css';
 import plus from '../photos/plus.png';
 import minus from '../photos/minus.png';
-import { getMonthIndex, monthsInYear, nameOfMonths, years } from '../Mocks/mockData';
+import { getMonthIndex, monthsInYear, nameOfMonths, years, currentYear } from '../Mocks/mockData';
 
 const AddExtraPayments = ({ setAddMonthlyPayment, setEveryMounthAmount, setEveryMounthName, setOneTimeAmount, setOneTimeMonth, setOneTimeYear, setEveryMounthIndex, setIsApplyed }) => {
     const [isOpen, setIsOpen] = useState(false);
@@ -13,7 +13,7 @@ const AddExtraPayments = ({ setAddMonthlyPayment, setEveryMounthAmount, setEvery
     const [everyMounthIndexX, setEveryMounthIndexX] = useState(0);
     const [oneTimeAmountX, setOneTimeAmountX] = useState(0);
     const [oneTimeMonthX, setOneTimeMonthX] = useState(0);
-    const [oneTimeYearX, setOneTimeYearX] = useState(0);
+    const [oneTimeYearX, setOneTimeYearX] = useState(currentYear);
     const handleClick = () => {
         setIsOpen(!isOpen);
     }
@@ -79,8 +79,7 @@ const AddExtraPayments = ({ setAddMonthlyPayment, setEveryMounthAmount, setEvery
                             }} />
                             <select onChange={(e) => {
                                 if (e.target.value) {
-                                    setEveryMounthIndexX(e.target.value);
-                                    console.log('l', e.target.value);
+                                    setEveryMounthIndexX(parseFloat(e.target.value));
                                 }
                                 else {
                                     setEveryMounthIndexX(0);
@@ -99,21 +98,44 @@ const AddExtraPayments = ({ setAddMonthlyPayment, setEveryMounthAmount, setEvery
                             Amount as a one-time payment in:
                         </div>
                         <div className={styles.inputs}>
-                            <input type='number' placeholder='$' onChange={(e) => setOneTimeAmountX(e.target.value)} />
-                            <select onChange={(e) => setOneTimeMonthX(e.target.value)}>
+                            <input type='number' placeholder='$' onChange={(e) => {
+                                if (e.target.value) {
+                                    setOneTimeAmountX(e.target.value)
+                                }
+                                else {
+                                    setOneTimeAmountX(0)
+                                }
+                            }} />
+                            <select onChange={(e) => {
+                                if (e.target.value) {
+                                    setOneTimeMonthX(parseFloat(e.target.value))
+                                }
+                                else {
+                                    setOneTimeMonthX(0);
+                                }
+                            }}>
                                 {
                                     nameOfMonths.map((month, index) => {
                                         return (
-                                            <option key={index}>{month}</option>
+                                            <option key={index} value={index}>{month}</option>
                                         )
                                     })
                                 }
                             </select>
-                            <select style={{ width: '80px' }} onChange={(e) => setOneTimeYearX(e.target.value)}>
+                            <select style={{ width: '80px' }} onChange={(e) => {
+                                if (e.target.value || e.target.value !== 0) {
+                                    setOneTimeYearX(parseFloat(e.target.value));
+                                }
+                                else {
+                                    console.log('nuuulaaaa');
+                                    setOneTimeYearX(parseFloat(currentYear));
+                                }
+
+                            }}>
                                 {
                                     years.map((year, index) => {
                                         return (
-                                            <option key={index}>{year}</option>
+                                            <option key={index} value={year}>{year}</option>
                                         )
                                     })
                                 }

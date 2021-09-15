@@ -6,7 +6,8 @@ import { getMonthIndex, nameOfMonths, nameOfMonthsShortcut } from '../Mocks/mock
 const AmortizationSchedule = ({ loanYears, loanMonths, payment, interestRate, loanAmount, addMonthlyPayment, everyMounthAmount, everyMounthIndex, everyMounthName, oneTimeAmount, oneTimeMonth, oneTimeYear }) => {
     const [currentDate, setCurrentDate] = useState();
     const [futureDate, setFutureDate] = useState();
-    var totalInterestVar = 0;
+    // var lastArray = true;
+    // var totalInterestVar = 0;
     const nullVar = 0;
     const currentMonthIndex = everyMounthIndex + 1;
     var previousMonthIndex;
@@ -17,6 +18,9 @@ const AmortizationSchedule = ({ loanYears, loanMonths, payment, interestRate, lo
         previousMonthIndex = 12;
     }
     // console.log('INDEX OF MONTH', everyMounthIndex);
+    // console.log('AMOUNT', oneTimeAmount);
+    // console.log('INDEX OF MONTH', oneTimeMonth);
+    // console.log('INDEX OF YEAR', oneTimeYear);
 
     useEffect(() => {
         if (Number.isInteger(loanYears) === true && Number.isInteger(loanMonths) === false && (loanMonths !== 0 || loanYears !== 0)) {
@@ -29,30 +33,41 @@ const AmortizationSchedule = ({ loanYears, loanMonths, payment, interestRate, lo
             getDate('months');
             addTableRows(loanMonths);
         }
-        if (totalInterestVar !== 0) {
-            // console.log('TOTAL INTEREST VAR', totalInterestVar);
-        }
-    }, [loanYears, loanMonths, totalInterestVar]);
+        // if (totalInterestVar !== 0) {
+        //     // console.log('TOTAL INTEREST VAR', totalInterestVar);
+        // }
+    }, [loanYears, loanMonths]);
 
-    useEffect(() => {
-        const lastNumber = (paymentt, pti) => {
-            // console.log('-----POCETAK--');
-            var counter = 1;
-            for (var i = 0; i < loanMonths; i++) {
-                // console.log('variable', ((i + 1) * paymentt).toFixed(2));
-                // console.log('my', (pti - ((i + 1) * paymentt)).toFixed(2));
-                if ((pti - ((i + 1) * paymentt)).toFixed(2) > 0) {
-                    // console.log('KONACNA', (pti - ((i + 1) * paymentt)).toFixed(2));
-                    counter++;
-                }
-            }
-            // console.log('COUNTER', counter)
-            // console.log('-----KRAJ--');
-            // console.log('Last interest', (((interestRate / 100) / 12) * 358.34).toFixed(2));
-        }
-        // Ovdje trenutno unosim podatke
-        lastNumber(1096.6640076471413, 5000 + 71.15);
-    }, [])
+    // useEffect(() => {
+    //     const lastNumber = (paymentt, pti) => {
+    //         var counter = 1;
+    //         for (var i = 0; i < loanMonths; i++) {
+    //             // console.log('variable', ((i + 1) * paymentt).toFixed(2));
+    //             // console.log('my', (pti - ((i + 1) * paymentt)).toFixed(2));
+    //             if ((pti - ((i + 1) * paymentt)).toFixed(2) > 0) {
+    //                 // console.log('KONACNA', (pti - ((i + 1) * paymentt)).toFixed(2));
+    //                 counter++;
+    //             }
+    //         }
+    //         // console.log('COUNTER', counter)
+    //         // console.log('Last interest', (((interestRate / 100) / 12) * 358.34).toFixed(2));
+    //     }
+    //     lastNumber(1096.6640076471413, 5000 + 71.15);
+    // }, [])
+
+    // const lastNumber = (paymentt, pti) => {
+    //     var counter = 1;
+    //     for (var i = 0; i < loanMonths; i++) {
+    //         // console.log('variable', ((i + 1) * paymentt).toFixed(2));
+    //         // console.log('my', (pti - ((i + 1) * paymentt)).toFixed(2));
+    //         if ((pti - ((i + 1) * paymentt)).toFixed(2) > 0) {
+    //             // console.log('KONACNA', (pti - ((i + 1) * paymentt)).toFixed(2));
+    //             counter++;
+    //         }
+    //     }
+    //     console.log('COUNTER', counter)
+    //     // console.log('Last interest', (((interestRate / 100) / 12) * 358.34).toFixed(2));
+    // }
 
     const interestPerMounth = (interestRate, pmtt) => {
         return (((interestRate / 100) / 12) * pmtt)
@@ -70,15 +85,20 @@ const AmortizationSchedule = ({ loanYears, loanMonths, payment, interestRate, lo
 
     const addTableRows = (loanMonths) => {
         var tableRows = [];
+        var interestArray = [];
+        var balanceArray = [];
+        var totalInterestArray = [];
         var counter = currentMonth() + 1;
         var counterYears = currentYear();
         payment = (parseFloat(payment) + parseFloat(addMonthlyPayment));
-        // payment = parseFloat(payment) + parseFloat(totalInterestVar);
         var interest = interestPerMounth(interestRate, loanAmount);
         var principal = (payment - interest);
         var balance = (loanAmount - principal);
         var totalInt = parseFloat(interest);
         for (var i = 0; i < loanMonths; i++) {
+            if (counterYears === oneTimeYear && counter === oneTimeMonth + 1) {
+                payment = (parseFloat(payment) + parseFloat(oneTimeAmount));
+            }
             if (counter === currentMonthIndex) {
                 payment = (parseFloat(payment) + parseFloat(everyMounthAmount));
             }
@@ -92,11 +112,36 @@ const AmortizationSchedule = ({ loanYears, loanMonths, payment, interestRate, lo
                     <th className={styles.BodySix}>${balance < 0 || Number.isNaN(balance) === true ? nullVar.toFixed(2) : balance.toFixed(2)}</th>
                 </tr>
             )
+            if (interest < 0) {
+                var lastPayment = balanceArray[balanceArray.length - 3] + parseFloat(interestArray[interestArray.length - 2]);
+                var lastPrincipal = balanceArray[balanceArray.length - 3];
+                var lastInterest = interestArray[interestArray.length - 2];
+                var lastTotalInterest = totalInterestArray[totalInterestArray.length - 3] + lastInterest;
+                // console.log('----', parseFloat(interestArray[interestArray.length - 2]));
+                // console.log('---->', balanceArray[balanceArray.length - 3]);
+                // console.log('BBB', parseFloat(balanceArray[balanceArray.length - 3]) + parseFloat(interestArray[interestArray.length - 2]));
+                tableRows.pop();
+                tableRows[tableRows.length - 1] = <tr className={styles.TableRow}>
+                    <th className={styles.BodyOne}>{nameOfMonthsShortcut[counter - 2]} {counterYears}</th>
+                    <th className={styles.BodyTwo}>${lastPayment && lastPayment.toFixed(2)}</th>
+                    <th className={styles.BodyThree}>${lastPrincipal && lastPrincipal.toFixed(2)}</th>
+                    <th className={styles.BodyFour}>${lastInterest && lastInterest.toFixed(2)}</th>
+                    <th className={styles.BodyFive}>${lastTotalInterest && lastTotalInterest.toFixed(2)}</th>
+                    <th className={styles.BodySix}>${balance < 0 || Number.isNaN(balance) === true ? nullVar.toFixed(2) : balance.toFixed(2)}</th>
+                </tr>;
+                break;
+            }
             if (counter === currentMonthIndex) {
                 payment = (parseFloat(payment) - parseFloat(everyMounthAmount));
             }
+            if (counterYears === oneTimeYear && counter === oneTimeMonth + 1) {
+                payment = (parseFloat(payment) - parseFloat(oneTimeAmount));
+            }
             interest = interestPerMounth(interestRate, balance);
             totalInt = parseFloat(parseFloat(totalInt) + parseFloat(interest));
+            if (counterYears === oneTimeYear && counter === oneTimeMonth) {
+                payment = (parseFloat(payment) + parseFloat(oneTimeAmount));
+            }
             if (counter === previousMonthIndex) {
                 payment = (parseFloat(payment) + parseFloat(everyMounthAmount));
             }
@@ -105,18 +150,22 @@ const AmortizationSchedule = ({ loanYears, loanMonths, payment, interestRate, lo
             if (counter === previousMonthIndex) {
                 payment = (parseFloat(payment) - parseFloat(everyMounthAmount));
             }
-            counter++;
-            if (interest < 0) {
-                break;
+            if (counterYears === oneTimeYear && counter === oneTimeMonth) {
+                payment = (parseFloat(payment) - parseFloat(oneTimeAmount));
             }
+            counter++;
+            interestArray.push(interest);
+            balanceArray.push(balance);
+            totalInterestArray.push(totalInt);
+            // if (interest < 0) {
+            //     break;
+            // }
             if (counter > 12) {
                 counter = 1;
                 counterYears += 1;
             }
-            // if (i === (loanMonths - 1)) {
-            //     totalInterestVar = + totalInt
-            // }
         }
+        // tableRows.splice(-1, 1);
         return tableRows;
     }
 

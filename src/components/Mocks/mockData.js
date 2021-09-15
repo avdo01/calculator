@@ -1,5 +1,5 @@
 const today = new Date();
-const currentYear = today.getFullYear();
+export const currentYear = today.getFullYear();
 
 const addYears = (number) => {
     let yearsTemp = [];
