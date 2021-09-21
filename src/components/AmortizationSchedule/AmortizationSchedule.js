@@ -109,7 +109,7 @@ const AmortizationSchedule = ({ loanYears, loanMonths, payment, interestRate, lo
                     <th className={styles.BodySix}>${balance < 0 || Number.isNaN(balance) === true ? nullVar.toFixed(2) : balance.toFixed(2)}</th>
                 </tr>
             )
-            datesArray.push(nameOfMonthsShortcut[counter - 1] + ' ' + day + ', ' + counterYears);
+            datesArray.push(nameOfMonths[counter - 1] + ' ' + day + ', ' + counterYears);
             if (interest < 0) {
                 var lastPayment = balanceArray[balanceArray.length - 3] + parseFloat(interestArray[interestArray.length - 2]);
                 var lastPrincipal = balanceArray[balanceArray.length - 3];
@@ -128,7 +128,7 @@ const AmortizationSchedule = ({ loanYears, loanMonths, payment, interestRate, lo
                     <th className={styles.BodyFive}>${lastTotalInterest && lastTotalInterest.toFixed(2)}</th>
                     <th className={styles.BodySix}>${balance < 0 || Number.isNaN(balance) === true ? nullVar.toFixed(2) : balance.toFixed(2)}</th>
                 </tr>;
-                datesArray[datesArray.length - 1] = (nameOfMonthsShortcut[counter - 2] + ' ' + day + ', ' + counterYears);
+                datesArray[datesArray.length - 1] = (nameOfMonths[counter - 2] + ' ' + day + ', ' + counterYears);
                 break;
             }
             if (counter === currentMonthIndex && startMonth === false) {
@@ -192,7 +192,7 @@ const AmortizationSchedule = ({ loanYears, loanMonths, payment, interestRate, lo
                     <th className={styles.BodyFive}>${lastTotalInterest && lastTotalInterest.toFixed(2)}</th>
                     <th className={styles.BodySix}>${balance < 0 || Number.isNaN(balance) === true ? nullVar.toFixed(2) : balance.toFixed(2)}</th>
                 </tr>;
-                datesArray[datesArray.length - 1] = (nameOfMonthsShortcut[counter - 2] + ' ' + day + ', ' + counterYears);
+                datesArray[datesArray.length - 1] = (nameOfMonths[counter - 2] + ' ' + day + ', ' + counterYears);
             }
         }
         return tableRows;
