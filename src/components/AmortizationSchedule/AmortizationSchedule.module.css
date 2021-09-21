@@ -225,41 +225,60 @@
     .Table{
         width: 100%;
     }
+    .HeadOne{
+        font-size: 10px;
+    }
+    .HeadTwo{
+        font-size: 10px;
+    }
+    .HeadThree{
+        font-size: 10px;
+    }
+    .HeadFour{
+        font-size: 10px;
+    }
+    .HeadFive{
+        font-size: 10px;
+    }
+    .HeadSix{
+        font-size: 10px;
+        text-align: right;
+    }
     .BodyOne{
-        width: 200px;
+        width: 20%;
         text-align: left;
         border-top: 1px solid green;
         padding-top: 5px;
         padding-bottom: 5px;
-        font-size: 10px;
+        font-size: 9px;
     }
     .BodyTwo{
         width: 160px;
         border-top: 1px solid green;
         padding-top: 5px;
         padding-bottom: 5px;
-        font-size: 10px;
+        font-size: 9px;
     }
     .BodyThree{
         width: 160px;
         border-top: 1px solid green;
         padding-top: 15px;
         padding-bottom: 15px;
-        font-size: 10px;
+        font-size: 9px;
     }
     .BodyFour{
         width: 160px;
         border-top: 1px solid green;
         padding-top: 15px;
         padding-bottom: 15px;
-        font-size: 10px;
+        font-size: 9px;
     }
     .BodyFive{
         width: 160px;
         border-top: 1px solid green;
         padding-top: 15px;
         padding-bottom: 15px;
-        font-size: 10px;
+        font-size: 9px;
     }
     .BodySix{
         width: 160px;
@@ -267,13 +286,19 @@
         border-top: 1px solid green;
         padding-top: 15px;
         padding-bottom: 15px;
-        font-size: 10px;
+        font-size: 9px;
     }
     .StartDateDivInput{
         width: 90%;
     }
+    .EstimatedDateEnd{
+        font-size: 30px;
+    }
     .StartDateDivInput input{
         width: 100%;
+    }
+    .Print{
+        margin-top: 35px;
     }
 }
 
@@ -286,13 +311,13 @@
     .CentralWrapper{
         display: flex;
         width: 90%;
-        padding: 20px 0px 0px 0px;
+        padding: 20px 20px 0px 20px;
         align-items: center;
     }
     .Date{
         display: flex;
         flex-direction: row;
-        gap: 20px;
+        gap: 80px;
     }
     .Title{
         text-align: center;
@@ -300,8 +325,50 @@
     .Table{
         width: 100%;
     }
+    .HeadOne{
+        font-size: 13px;
+    }
+    .HeadTwo{
+        font-size: 13px;
+    }
+    .HeadThree{
+        font-size: 13px;
+    }
+    .HeadFour{
+        font-size: 13px;
+    }
+    .HeadFive{
+        font-size: 13px;
+    }
+    .HeadSix{
+        font-size: 13px;
+        text-align: right;
+    }
+    .BodyOne{
+        font-size: 12px;
+        width: 20%;
+    }
+    .BodyTwo{
+        font-size: 12px;
+    }
+    .BodyThree{
+        font-size: 12px;
+    }
+    .BodyFour{
+        font-size: 12px;
+    }
+    .BodyFive{
+        font-size: 12px;
+    }
+    .BodySix{
+        font-size: 12px;
+    }
     .StartDateDivInput input{
         width: 99%;
+    }
+    .Print{
+        margin-top: 35px;
+        margin-bottom: 20px;
     }
 }
 
@@ -343,5 +410,99 @@
         display: flex;
         justify-content: flex-end;
         width: 100%;
+        margin-bottom: 30px;
+    }
+}
+
+@media all and (min-width: 2560px){
+    .MainWrapper{
+        display: flex;
+        overflow: hidden;
+        width: 100%;
+    }
+    .CentralWrapper{
+        display: flex;
+        width: 60%;
+        padding: 20px 20px 0px 20px;
+        align-items: center;
+    }
+    .Date{
+        display: flex;
+        flex-direction: row;
+        width: 100%;
+        margin-bottom: 50px;
+    }
+    .StartDateDiv{
+        display: flex;
+        justify-content: flex-start;
+    }
+    .EstimatedDate{
+        display: flex;
+        justify-content: flex-end;
+    }
+    .Title{
+        text-align: center;
+    }
+    .Table{
+        width: 1250px;
+    }
+    .HeadOne{
+        font-size: 20px;
+        width: 250px;
+    }
+    .HeadTwo{
+        font-size: 20px;
+        width: 200px;
+    }
+    .HeadThree{
+        font-size: 20px;
+        width: 200px;
+    }
+    .HeadFour{
+        font-size: 20px;
+        width: 200px;
+    }
+    .HeadFive{
+        font-size: 20px;
+        width: 200px;
+    }
+    .HeadSix{
+        font-size: 20px;
+        text-align: right;
+        width: 200px;
+    }
+    .BodyOne{
+        font-size: 20px;
+        width: 250px;
+    }
+    .BodyTwo{
+        font-size: 20px;
+        width: 200px;
+    }
+    .BodyThree{
+        font-size: 20px;
+        width: 200px;
+    }
+    .BodyFour{
+        font-size: 20px;
+        width: 200px;
+    }
+    .BodyFive{
+        font-size: 20px;
+        width: 200px;
+    }
+    .BodySix{
+        font-size: 20px;
+        width: 200px;
+    }
+    .StartDateDivInput input{
+        width: 99%;
+    }
+    .Print{
+        display: flex;
+        justify-content: flex-end;
+        width: 100%;
+        margin-right: 100px;
+        margin-bottom: 30px;
     }
 }

@@ -234,13 +234,23 @@
     }
 }
 
-@media all and (min-width: 1000px) and (max-width: 1040px){
+@media all and (min-width: 901px) and (max-width: 1024px){
     .mainWrapper{
         overflow: hidden;
         width: 100%;
     }
     .down{
         margin-left: 40px;
+    }
+}
+
+@media all and (min-width: 1025px) and (max-width: 1400px){
+    .mainWrapper{
+        overflow: hidden;
+        width: 100%;
+    }
+    .leftContent{
+        margin-left: 120px;
     }
 }
 
