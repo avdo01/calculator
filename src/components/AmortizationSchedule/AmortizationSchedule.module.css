@@ -372,7 +372,7 @@
     }
 }
 
-@media all and (min-width: 1024px) and (max-width: 1439px){
+@media all and (min-width: 1024px) and (max-width: 1440px){
     .MainWrapper{
         display: flex;
         overflow: hidden;
@@ -410,6 +410,48 @@
         display: flex;
         justify-content: flex-end;
         width: 100%;
+        margin-bottom: 30px;
+    }
+}
+
+@media all and (min-width: 1441px) and (max-width: 2500px){
+    .MainWrapper{
+        display: flex;
+        overflow: hidden;
+        width: 100%;
+    }
+    .CentralWrapper{
+        display: flex;
+        width: 60%;
+        padding: 20px 20px 0px 20px;
+        align-items: center;
+    }
+    .Date{
+        display: flex;
+        flex-direction: row;
+        width: 90%;
+    }
+    .StartDateDiv{
+        display: flex;
+        justify-content: flex-start;
+    }
+    .EstimatedDate{
+        display: flex;
+        justify-content: flex-end;
+    }
+    .Title{
+        text-align: center;
+    }
+    .Table{
+        width: 1000px;
+    }
+    .StartDateDivInput input{
+        width: 99%;
+    }
+    .Print{
+        display: flex;
+        justify-content: flex-end;
+        width: 90%;
         margin-bottom: 30px;
     }
 }
