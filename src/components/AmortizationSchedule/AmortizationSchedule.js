@@ -9,6 +9,7 @@ const AmortizationSchedule = ({ loanYears, loanMonths, payment, interestRate, lo
     const nullVar = 0;
     const currentMonthIndex = everyMounthIndex + 1;
     var previousMonthIndex;
+    var datesArray = [];
     if (currentMonthIndex > 1) {
         previousMonthIndex = currentMonthIndex - 1;
     }
@@ -29,6 +30,11 @@ const AmortizationSchedule = ({ loanYears, loanMonths, payment, interestRate, lo
         }
     }, [loanYears, loanMonths]);
 
+    useEffect(() => {
+        datesArray[datesArray.length - 1] =
+            setFutureDate(datesArray[datesArray.length - 1]);
+    });
+
     const interestPerMounth = (interestRate, pmtt) => {
         return (((interestRate / 100) / 12) * pmtt)
     }
@@ -44,10 +50,12 @@ const AmortizationSchedule = ({ loanYears, loanMonths, payment, interestRate, lo
     }
 
     const addTableRows = (loanMonths) => {
+        var date = new Date();
         var tableRows = [];
         var interestArray = [];
         var balanceArray = [];
         var totalInterestArray = [];
+        var day = date.getDate();
         var counter = currentMonth() + 1;
         var counterYears = currentYear();
         payment = (parseFloat(payment) + parseFloat(addMonthlyPayment));
@@ -101,6 +109,7 @@ const AmortizationSchedule = ({ loanYears, loanMonths, payment, interestRate, lo
                     <th className={styles.BodySix}>${balance < 0 || Number.isNaN(balance) === true ? nullVar.toFixed(2) : balance.toFixed(2)}</th>
                 </tr>
             )
+            datesArray.push(nameOfMonthsShortcut[counter - 1] + ' ' + day + ', ' + counterYears);
             if (interest < 0) {
                 var lastPayment = balanceArray[balanceArray.length - 3] + parseFloat(interestArray[interestArray.length - 2]);
                 var lastPrincipal = balanceArray[balanceArray.length - 3];
@@ -119,6 +128,7 @@ const AmortizationSchedule = ({ loanYears, loanMonths, payment, interestRate, lo
                     <th className={styles.BodyFive}>${lastTotalInterest && lastTotalInterest.toFixed(2)}</th>
                     <th className={styles.BodySix}>${balance < 0 || Number.isNaN(balance) === true ? nullVar.toFixed(2) : balance.toFixed(2)}</th>
                 </tr>;
+                datesArray[datesArray.length - 1] = (nameOfMonthsShortcut[counter - 2] + ' ' + day + ', ' + counterYears);
                 break;
             }
             if (counter === currentMonthIndex && startMonth === false) {
@@ -182,6 +192,7 @@ const AmortizationSchedule = ({ loanYears, loanMonths, payment, interestRate, lo
                     <th className={styles.BodyFive}>${lastTotalInterest && lastTotalInterest.toFixed(2)}</th>
                     <th className={styles.BodySix}>${balance < 0 || Number.isNaN(balance) === true ? nullVar.toFixed(2) : balance.toFixed(2)}</th>
                 </tr>;
+                datesArray[datesArray.length - 1] = (nameOfMonthsShortcut[counter - 2] + ' ' + day + ', ' + counterYears);
             }
         }
         return tableRows;
