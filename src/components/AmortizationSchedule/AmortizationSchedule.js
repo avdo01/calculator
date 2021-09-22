@@ -1,11 +1,13 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import styles from './AmortizationSchedule.module.css';
 import logo from '../photos/forPrint.png';
-import { getMonthIndex, nameOfMonths, nameOfMonthsShortcut } from '../Mocks/mockData';
+import { nameOfMonths, nameOfMonthsShortcut } from '../Mocks/mockData';
+import ReactToPrint from 'react-to-print';
 
 const AmortizationSchedule = ({ loanYears, loanMonths, payment, interestRate, loanAmount, addMonthlyPayment, everyMounthAmount, everyMounthIndex, everyMounthName, oneTimeAmount, oneTimeMonth, oneTimeYear }) => {
     const [currentDate, setCurrentDate] = useState();
     const [futureDate, setFutureDate] = useState();
+    const printRef = useRef();
     const nullVar = 0;
     const currentMonthIndex = everyMounthIndex + 1;
     var previousMonthIndex;
@@ -102,11 +104,11 @@ const AmortizationSchedule = ({ loanYears, loanMonths, payment, interestRate, lo
             tableRows.push(
                 <tr className={styles.TableRow}>
                     <th className={styles.BodyOne}>{nameOfMonthsShortcut[counter - 1]} {counterYears}</th>
-                    <th className={styles.BodyTwo}>${Number.isNaN(payment) === false ? parseFloat(payment).toFixed(2) : nullVar.toFixed(2)}</th>
-                    <th className={styles.BodyThree}>${Number.isNaN(principal) === false ? principal.toFixed(2) : nullVar.toFixed(2)}</th>
-                    <th className={styles.BodyFour}>${Number.isNaN(interest) === false ? interest.toFixed(2) : nullVar.toFixed(2)}</th>
-                    <th className={styles.BodyFive}>${Number.isNaN(totalInt) === false ? totalInt.toFixed(2) : nullVar.toFixed(2)}</th>
-                    <th className={styles.BodySix}>${balance < 0 || Number.isNaN(balance) === true ? nullVar.toFixed(2) : balance.toFixed(2)}</th>
+                    <th className={styles.BodyTwo}>${Number.isNaN(payment) === false ? payment.toLocaleString(undefined, { maximumFractionDigits: 2, minimumFractionDigits: 2 }) : nullVar.toFixed(2)}</th>
+                    <th className={styles.BodyThree}>${Number.isNaN(principal) === false ? principal.toLocaleString(undefined, { maximumFractionDigits: 2, minimumFractionDigits: 2 }) : nullVar.toFixed(2)}</th>
+                    <th className={styles.BodyFour}>${Number.isNaN(interest) === false ? interest.toLocaleString(undefined, { maximumFractionDigits: 2, minimumFractionDigits: 2 }) : nullVar.toFixed(2)}</th>
+                    <th className={styles.BodyFive}>${Number.isNaN(totalInt) === false ? totalInt.toLocaleString(undefined, { maximumFractionDigits: 2, minimumFractionDigits: 2 }) : nullVar.toFixed(2)}</th>
+                    <th className={styles.BodySix}>${balance < 0 || Number.isNaN(balance) === true ? nullVar.toFixed(2) : balance.toLocaleString(undefined, { maximumFractionDigits: 2, minimumFractionDigits: 2 })}</th>
                 </tr>
             )
             datesArray.push(nameOfMonths[counter - 1] + ' ' + day + ', ' + counterYears);
@@ -122,11 +124,11 @@ const AmortizationSchedule = ({ loanYears, loanMonths, payment, interestRate, lo
                 tableRows.pop();
                 tableRows[tableRows.length - 1] = <tr className={styles.TableRow}>
                     <th className={styles.BodyOne}>{nameOfMonthsShortcut[counter - 2]} {counterYears}</th>
-                    <th className={styles.BodyTwo}>${lastPayment && lastPayment.toFixed(2)}</th>
-                    <th className={styles.BodyThree}>${lastPrincipal && lastPrincipal.toFixed(2)}</th>
-                    <th className={styles.BodyFour}>${lastInterest && lastInterest.toFixed(2)}</th>
-                    <th className={styles.BodyFive}>${lastTotalInterest && lastTotalInterest.toFixed(2)}</th>
-                    <th className={styles.BodySix}>${balance < 0 || Number.isNaN(balance) === true ? nullVar.toFixed(2) : balance.toFixed(2)}</th>
+                    <th className={styles.BodyTwo}>${lastPayment && lastPayment.toLocaleString(undefined, { maximumFractionDigits: 2, minimumFractionDigits: 2 })}</th>
+                    <th className={styles.BodyThree}>${lastPrincipal && lastPrincipal.toLocaleString(undefined, { maximumFractionDigits: 2, minimumFractionDigits: 2 })}</th>
+                    <th className={styles.BodyFour}>${lastInterest && lastInterest.toLocaleString(undefined, { maximumFractionDigits: 2, minimumFractionDigits: 2 })}</th>
+                    <th className={styles.BodyFive}>${lastTotalInterest && lastTotalInterest.toLocaleString(undefined, { maximumFractionDigits: 2, minimumFractionDigits: 2 })}</th>
+                    <th className={styles.BodySix}>${balance < 0 || Number.isNaN(balance) === true ? nullVar.toFixed(2) : balance.toLocaleString(undefined, { maximumFractionDigits: 2, minimumFractionDigits: 2 })}</th>
                 </tr>;
                 datesArray[datesArray.length - 1] = (nameOfMonths[counter - 2] + ' ' + day + ', ' + counterYears);
                 break;
@@ -186,11 +188,11 @@ const AmortizationSchedule = ({ loanYears, loanMonths, payment, interestRate, lo
                 var lastTotalInterest = totalInterestArray[totalInterestArray.length - 3] + lastInterest;
                 tableRows[tableRows.length - 1] = <tr className={styles.TableRow}>
                     <th className={styles.BodyOne}>{nameOfMonthsShortcut[counter - 2]} {counterYears}</th>
-                    <th className={styles.BodyTwo}>${lastPayment && lastPayment.toFixed(2)}</th>
-                    <th className={styles.BodyThree}>${lastPrincipal && lastPrincipal.toFixed(2)}</th>
-                    <th className={styles.BodyFour}>${lastInterest && lastInterest.toFixed(2)}</th>
-                    <th className={styles.BodyFive}>${lastTotalInterest && lastTotalInterest.toFixed(2)}</th>
-                    <th className={styles.BodySix}>${balance < 0 || Number.isNaN(balance) === true ? nullVar.toFixed(2) : balance.toFixed(2)}</th>
+                    <th className={styles.BodyTwo}>${lastPayment && lastPayment.toLocaleString(undefined, { maximumFractionDigits: 2, minimumFractionDigits: 2 })}</th>
+                    <th className={styles.BodyThree}>${lastPrincipal && lastPrincipal.toLocaleString(undefined, { maximumFractionDigits: 2, minimumFractionDigits: 2 })}</th>
+                    <th className={styles.BodyFour}>${lastInterest && lastInterest.toLocaleString(undefined, { maximumFractionDigits: 2, minimumFractionDigits: 2 })}</th>
+                    <th className={styles.BodyFive}>${lastTotalInterest && lastTotalInterest.toLocaleString(undefined, { maximumFractionDigits: 2, minimumFractionDigits: 2 })}</th>
+                    <th className={styles.BodySix}>${balance < 0 || Number.isNaN(balance) === true ? nullVar.toFixed(2) : balance.toLocaleString(undefined, { maximumFractionDigits: 2, minimumFractionDigits: 2 })}</th>
                 </tr>;
                 datesArray[datesArray.length - 1] = (nameOfMonths[counter - 2] + ' ' + day + ', ' + counterYears);
             }
@@ -227,7 +229,7 @@ const AmortizationSchedule = ({ loanYears, loanMonths, payment, interestRate, lo
 
     return (
         <div className={styles.MainWrapper}>
-            <div className={styles.CentralWrapper}>
+            <div className={styles.CentralWrapper} ref={printRef}>
                 <div className={styles.Date}>
                     <div className={styles.StartDateDiv}>
                         <div className={styles.StartDateDivText}>
@@ -266,10 +268,20 @@ const AmortizationSchedule = ({ loanYears, loanMonths, payment, interestRate, lo
                 </div>
                 <div className={styles.Print}>
                     <div className={styles.PrintText}>
-                        Print Schedule
+                        <ReactToPrint
+                            trigger={() => {
+                                return <input type="button" value={'Print Schedule'} />
+                            }}
+                            content={() => printRef.current}
+                        />
                     </div>
                     <div className={styles.PrintImage}>
-                        <img alt="Print" src={logo} />
+                        <ReactToPrint
+                            trigger={() => {
+                                return <input type="image" src={logo} />
+                            }}
+                            content={() => printRef.current}
+                        />
                     </div>
                 </div>
             </div>

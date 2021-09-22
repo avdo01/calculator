@@ -3,7 +3,6 @@ import AddExtraPayments from '../AddExtraPayments/AddExtraPayments';
 import AmortizationSchedule from '../AmortizationSchedule/AmortizationSchedule';
 import logo from '../photos/coolicon1.png';
 import './amortizationCalculator.css';
-import { getNumberOfTableRows } from '../Mocks/mockData';
 
 const AmortizationCalculator = () => {
     const [loanAmount, setLoanAmount] = useState();
@@ -111,7 +110,7 @@ const AmortizationCalculator = () => {
                 <div className='right-content-am'>
                     <div className='right-content-first'>
                         <div className='right-number-am'>
-                            ${payment === 0 ? 0 : payment.toFixed(2)}
+                            ${payment === 0 ? 0 : payment.toLocaleString(undefined, { maximumFractionDigits: 2, minimumFractionDigits: 2 })}
                         </div>
                         <div className='right-text-am'>
                             Monthly Payments
@@ -123,7 +122,7 @@ const AmortizationCalculator = () => {
                                 Total Principal Paid
                             </div>
                             <div className='right-totals-number'>
-                                ${loanAmount ? loanAmount : 0}
+                                ${loanAmount ? loanAmount.toLocaleString(undefined, { maximumFractionDigits: 0, minimumFractionDigits: 0 }) : 0}
                             </div>
                         </div>
                         <div className='right-totals-line' />
@@ -132,7 +131,7 @@ const AmortizationCalculator = () => {
                                 Total Interest Paid
                             </div>
                             <div className='right-totals-number' style={{ paddingLeft: '8px' }}>
-                                ${totalInterest ? totalInterest.toFixed(2) : 0}
+                                ${totalInterest ? totalInterest.toLocaleString(undefined, { maximumFractionDigits: 2, minimumFractionDigits: 2 }) : 0}
                             </div>
                         </div>
                     </div>

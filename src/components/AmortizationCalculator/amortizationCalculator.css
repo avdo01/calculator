@@ -2,9 +2,8 @@
 @import url('https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=Raleway:wght@300&display=swap');
 
 .main{
-  /* display: flex;
-  flex-direction: column; */
-  overflow: hidden;
+  display: flex;
+  flex-direction: column;
   width: 100%;
 }
 
@@ -224,7 +223,7 @@ input[type=number]{
 }
 
 input[type=number]::placeholder{
-  color: #B7B7B7;
+  color: #969696;
   font-style: normal;
   font-weight: normal;
   font-size: 14px;
@@ -294,7 +293,7 @@ input[type=number]::placeholder{
   .left-content-am{
     display: flex;
     flex-direction: column;
-    order: 110vh;
+    order: 1;
     margin-left: 0px;
     margin-top: 0px;
     padding-top: 0px;
@@ -343,7 +342,7 @@ input[type=number]::placeholder{
   .main-wrapper-am{
     overflow: hidden;
     width: 100%;
-    height: 111vh;
+    height: 150vh;
     display: flex;
     flex-direction: row;
   }

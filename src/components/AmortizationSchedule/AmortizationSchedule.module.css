@@ -197,7 +197,19 @@
     color: #A3915D;
 }
 
-.PrintImage img{
+.PrintText input{
+    background-color: white;
+    border: 0px solid white;
+    color: #A3915D;
+    font-family: Raleway;
+    font-style: normal;
+    font-weight: bold;
+    font-size: 20px;
+    line-height: 23px;
+    cursor: pointer;
+}
+
+.PrintImage input{
     width: 18px;
     height: 22px;
 }
