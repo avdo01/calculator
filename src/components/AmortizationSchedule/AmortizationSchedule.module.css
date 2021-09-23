@@ -314,6 +314,12 @@
     }
 }
 
+@media print {
+    @page{
+        margin: 20mm;
+    }
+}
+
 @media all and (min-width: 768px) and (max-width: 1023px){
     .MainWrapper{
         display: flex;
