@@ -1,0 +1,21 @@
+{
+  "files": {
+    "main.css": "/calculators-am/static/css/main.536463bd.chunk.css",
+    "main.js": "/calculators-am/static/js/main.9b2c9521.chunk.js",
+    "main.js.map": "/calculators-am/static/js/main.9b2c9521.chunk.js.map",
+    "runtime-main.js": "/calculators-am/static/js/runtime-main.afd9b398.js",
+    "runtime-main.js.map": "/calculators-am/static/js/runtime-main.afd9b398.js.map",
+    "static/js/2.3610651c.chunk.js": "/calculators-am/static/js/2.3610651c.chunk.js",
+    "static/js/2.3610651c.chunk.js.map": "/calculators-am/static/js/2.3610651c.chunk.js.map",
+    "index.html": "/calculators-am/index.html",
+    "static/css/main.536463bd.chunk.css.map": "/calculators-am/static/css/main.536463bd.chunk.css.map",
+    "static/js/2.3610651c.chunk.js.LICENSE.txt": "/calculators-am/static/js/2.3610651c.chunk.js.LICENSE.txt",
+    "static/media/mortgageCalculator.css": "/calculators-am/static/media/Vector.8cfe1a9f.svg"
+  },
+  "entrypoints": [
+    "static/js/runtime-main.afd9b398.js",
+    "static/js/2.3610651c.chunk.js",
+    "static/css/main.536463bd.chunk.css",
+    "static/js/main.9b2c9521.chunk.js"
+  ]
+}

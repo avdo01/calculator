@@ -10,8 +10,8 @@ function App() {
     <div className="App">
       <Router>
         <Switch>
-          <Route exact path='/calculator1' component={MortgageCalculator} />
-          <Route exact path='/calculator2' component={AmortizationCalculator} />
+          <Route exact path='/nerminh18.sg-host.com/calculators-io/' component={MortgageCalculator} />
+          <Route exact path='/nerminh18.sg-host.com/calculators-am/' component={AmortizationCalculator} />
         </Switch>
       </Router>
     </div>
