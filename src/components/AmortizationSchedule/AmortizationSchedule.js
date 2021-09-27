@@ -60,11 +60,17 @@ const AmortizationSchedule = ({ loanYears, loanMonths, payment, interestRate, lo
         var day = date.getDate();
         var counter = currentMonth() + 1;
         var counterYears = currentYear();
-        payment = (parseFloat(payment) + parseFloat(addMonthlyPayment));
+        if (addMonthlyPayment) {
+            payment = (parseFloat(payment) + parseFloat(addMonthlyPayment));
+        }
         var interest = interestPerMounth(interestRate, loanAmount);
         var principal = (payment - interest);
         var balance = (loanAmount - principal);
         var totalInt = parseFloat(interest);
+        var firstBalanceMonthStart = balance - everyMounthAmount - oneTimeAmount;
+        var secondInterestMonthStart = interestPerMounth(interestRate, firstBalanceMonthStart);
+        // console.log('balance', balance - everyMounthAmount - oneTimeAmount);
+        // console.log('second interest', interestPerMounth(interestRate, balance - everyMounthAmount - oneTimeAmount))
         var sum = loanAmount;
         var sumOne = loanAmount;
         var coMounth = 0;
@@ -91,26 +97,51 @@ const AmortizationSchedule = ({ loanYears, loanMonths, payment, interestRate, lo
             }
             if (counter === currentMonthIndex && startMonth === false) {
                 payment = (parseFloat(payment) + parseFloat(everyMounthAmount));
+                principal = payment - interest;
             }
-            if (startMonth === true && counter === currentMonthIndex) {
+            if (startMonth === true && counter === currentMonthIndex && coMounth === 0) {
                 payment = (parseFloat(payment) + parseFloat(everyMounthAmount));
                 interest = interestPerMounth(interestRate, sum);
                 principal = payment - interest;
-                if (coMounth === 0) {
-                    balance -= parseFloat(everyMounthAmount);
-                    coMounth++;
-                }
+                balance -= parseFloat(everyMounthAmount);
+                sum = balance;
+                coMounth++;
             }
-            tableRows.push(
-                <tr className={styles.TableRow}>
-                    <th className={styles.BodyOne}>{nameOfMonthsShortcut[counter - 1]} {counterYears}</th>
-                    <th className={styles.BodyTwo}>${Number.isNaN(payment) === false ? payment.toLocaleString(undefined, { maximumFractionDigits: 2, minimumFractionDigits: 2 }) : nullVar.toFixed(2)}</th>
-                    <th className={styles.BodyThree}>${Number.isNaN(principal) === false ? principal.toLocaleString(undefined, { maximumFractionDigits: 2, minimumFractionDigits: 2 }) : nullVar.toFixed(2)}</th>
-                    <th className={styles.BodyFour}>${Number.isNaN(interest) === false ? interest.toLocaleString(undefined, { maximumFractionDigits: 2, minimumFractionDigits: 2 }) : nullVar.toFixed(2)}</th>
-                    <th className={styles.BodyFive}>${Number.isNaN(totalInt) === false ? totalInt.toLocaleString(undefined, { maximumFractionDigits: 2, minimumFractionDigits: 2 }) : nullVar.toFixed(2)}</th>
-                    <th className={styles.BodySix}>${balance < 0 || Number.isNaN(balance) === true ? nullVar.toFixed(2) : balance.toLocaleString(undefined, { maximumFractionDigits: 2, minimumFractionDigits: 2 })}</th>
-                </tr>
-            )
+            if (i === 0 && oneTimeAmount > 0 && oneTimeYear === currentYear()) {
+                tableRows.push(
+                    <tr className={styles.TableRow}>
+                        <th className={styles.BodyOne}>{nameOfMonthsShortcut[counter - 1]} {counterYears}</th>
+                        <th className={styles.BodyTwo}>${Number.isNaN(payment) === false ? payment.toLocaleString(undefined, { maximumFractionDigits: 2, minimumFractionDigits: 2 }) : nullVar.toFixed(2)}</th>
+                        <th className={styles.BodyThree}>${Number.isNaN(principal) === false ? principal.toLocaleString(undefined, { maximumFractionDigits: 2, minimumFractionDigits: 2 }) : nullVar.toFixed(2)}</th>
+                        <th className={styles.BodyFour}>${Number.isNaN(interest) === false ? interest.toLocaleString(undefined, { maximumFractionDigits: 2, minimumFractionDigits: 2 }) : nullVar.toFixed(2)}</th>
+                        <th className={styles.BodyFive}>${Number.isNaN(totalInt) === false ? totalInt.toLocaleString(undefined, { maximumFractionDigits: 2, minimumFractionDigits: 2 }) : nullVar.toFixed(2)}</th>
+                        <th className={styles.BodySix}>${firstBalanceMonthStart < 0 || Number.isNaN(firstBalanceMonthStart) === true ? nullVar.toFixed(2) : firstBalanceMonthStart.toLocaleString(undefined, { maximumFractionDigits: 2, minimumFractionDigits: 2 })}</th>
+                    </tr>
+                )
+            } else if (i === 1 && oneTimeAmount > 0 && oneTimeYear === currentYear()) {
+                tableRows.push(
+                    <tr className={styles.TableRow}>
+                        <th className={styles.BodyOne}>{nameOfMonthsShortcut[counter - 1]} {counterYears}</th>
+                        <th className={styles.BodyTwo}>${Number.isNaN(payment) === false ? payment.toLocaleString(undefined, { maximumFractionDigits: 2, minimumFractionDigits: 2 }) : nullVar.toFixed(2)}</th>
+                        <th className={styles.BodyThree}>${Number.isNaN(principal) === false ? principal.toLocaleString(undefined, { maximumFractionDigits: 2, minimumFractionDigits: 2 }) : nullVar.toFixed(2)}</th>
+                        <th className={styles.BodyFour}>${Number.isNaN(secondInterestMonthStart) === false ? secondInterestMonthStart.toLocaleString(undefined, { maximumFractionDigits: 2, minimumFractionDigits: 2 }) : nullVar.toFixed(2)}</th>
+                        <th className={styles.BodyFive}>${Number.isNaN(totalInt) === false ? totalInt.toLocaleString(undefined, { maximumFractionDigits: 2, minimumFractionDigits: 2 }) : nullVar.toFixed(2)}</th>
+                        <th className={styles.BodySix}>${balance < 0 || Number.isNaN(balance) === true ? nullVar.toFixed(2) : balance.toLocaleString(undefined, { maximumFractionDigits: 2, minimumFractionDigits: 2 })}</th>
+                    </tr>
+                )
+            }
+            else {
+                tableRows.push(
+                    <tr className={styles.TableRow}>
+                        <th className={styles.BodyOne}>{nameOfMonthsShortcut[counter - 1]} {counterYears}</th>
+                        <th className={styles.BodyTwo}>${Number.isNaN(payment) === false ? payment.toLocaleString(undefined, { maximumFractionDigits: 2, minimumFractionDigits: 2 }) : nullVar.toFixed(2)}</th>
+                        <th className={styles.BodyThree}>${Number.isNaN(principal) === false ? principal.toLocaleString(undefined, { maximumFractionDigits: 2, minimumFractionDigits: 2 }) : nullVar.toFixed(2)}</th>
+                        <th className={styles.BodyFour}>${Number.isNaN(interest) === false ? interest.toLocaleString(undefined, { maximumFractionDigits: 2, minimumFractionDigits: 2 }) : nullVar.toFixed(2)}</th>
+                        <th className={styles.BodyFive}>${Number.isNaN(totalInt) === false ? totalInt.toLocaleString(undefined, { maximumFractionDigits: 2, minimumFractionDigits: 2 }) : nullVar.toFixed(2)}</th>
+                        <th className={styles.BodySix}>${balance < 0 || Number.isNaN(balance) === true ? nullVar.toFixed(2) : balance.toLocaleString(undefined, { maximumFractionDigits: 2, minimumFractionDigits: 2 })}</th>
+                    </tr>
+                )
+            }
             datesArray.push(nameOfMonths[counter - 1] + ' ' + day + ', ' + counterYears);
             if (interest < 0) {
                 var lastPayment = balanceArray[balanceArray.length - 3] + parseFloat(interestArray[interestArray.length - 2]);
@@ -135,6 +166,7 @@ const AmortizationSchedule = ({ loanYears, loanMonths, payment, interestRate, lo
             }
             if (counter === currentMonthIndex && startMonth === false) {
                 payment = (parseFloat(payment) - parseFloat(everyMounthAmount));
+                principal = payment - interest;
             }
             if (counterYears === oneTimeYear && counter === oneTimeMonth + 1 && startYear === false) {
                 payment = (parseFloat(payment) - parseFloat(oneTimeAmount));
@@ -156,12 +188,13 @@ const AmortizationSchedule = ({ loanYears, loanMonths, payment, interestRate, lo
             }
             principal = (payment - interest);
             balance = (parseFloat(balance) - parseFloat(principal));
-            if (startMonth === true && counter === currentMonthIndex) {
+            if (startMonth === true && counter === currentMonthIndex && coMounth === 1) {
                 payment = (parseFloat(payment) - parseFloat(everyMounthAmount));
                 interest = interestPerMounth(interestRate, sum);
                 principal = payment - interest;
-                balance += parseFloat(everyMounthAmount);
+                balance += (parseFloat(everyMounthAmount));
                 sum = balance;
+                coMounth++;
             }
             if (counter === previousMonthIndex) {
                 payment = (parseFloat(payment) - parseFloat(everyMounthAmount));
@@ -173,10 +206,6 @@ const AmortizationSchedule = ({ loanYears, loanMonths, payment, interestRate, lo
             interestArray.push(interest);
             balanceArray.push(balance);
             totalInterestArray.push(totalInt);
-
-            // if (interest < 0) {
-            //     break;
-            // }
             if (counter > 12) {
                 counter = 1;
                 counterYears += 1;
@@ -216,7 +245,6 @@ const AmortizationSchedule = ({ loanYears, loanMonths, payment, interestRate, lo
             setFutureDate((nameOfMonths[future.getMonth() + 1]) + ' ' + (future.getDate()) + ', ' + (future.getFullYear()));
         }
         else if (yearsOrMonths === 'nan') {
-            // var today = new Date();
             let fut = (nameOfMonths[today.getMonth()]) + ' ' + (today.getDate()) + ', ' + (today.getFullYear());
             setFutureDate(fut);
         }
@@ -229,7 +257,7 @@ const AmortizationSchedule = ({ loanYears, loanMonths, payment, interestRate, lo
 
     return (
         <div className={styles.MainWrapper}>
-            <div className={styles.CentralWrapper} ref={printRef}>
+            <div className={styles.CentralWrapper}>
                 <div className={styles.Date}>
                     <div className={styles.StartDateDiv}>
                         <div className={styles.StartDateDivText}>
@@ -251,7 +279,7 @@ const AmortizationSchedule = ({ loanYears, loanMonths, payment, interestRate, lo
                 <div className={styles.Title}>
                     Amortization Schedule
                 </div>
-                <div className={styles.Table}>
+                <div className={styles.Table} ref={printRef}>
                     <thead>
                         <tr>
                             <th className={styles.HeadOne}>Payment Date</th>
