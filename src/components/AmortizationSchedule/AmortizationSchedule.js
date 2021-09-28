@@ -215,10 +215,10 @@ const AmortizationSchedule = ({ loanYears, loanMonths, payment, interestRate, lo
                 var lastTotalInterest = totalInterestArray[totalInterestArray.length - 3] + lastInterest;
                 tableRows[tableRows.length - 1] = <tr className={styles.TableRow}>
                     <th className={styles.BodyOne}>{nameOfMonthsShortcut[counter - 2]} {counterYears}</th>
-                    <th className={styles.BodyTwo}>${(lastPayment && Number.isNaN(lastPayment)) ? lastPayment.toLocaleString(undefined, { maximumFractionDigits: 2, minimumFractionDigits: 2 }) : nullVar.toFixed(2)}</th>
-                    <th className={styles.BodyThree}>${(lastPrincipal && Number.isNaN(lastPrincipal)) ? lastPrincipal.toLocaleString(undefined, { maximumFractionDigits: 2, minimumFractionDigits: 2 }) : nullVar.toFixed(2)}</th>
-                    <th className={styles.BodyFour}>${(lastInterest && Number.isNaN(lastInterest)) ? lastInterest.toLocaleString(undefined, { maximumFractionDigits: 2, minimumFractionDigits: 2 }) : nullVar.toFixed(2)}</th>
-                    <th className={styles.BodyFive}>${(lastTotalInterest && Number.isNaN(lastTotalInterest)) ? lastTotalInterest.toLocaleString(undefined, { maximumFractionDigits: 2, minimumFractionDigits: 2 }) : nullVar.toFixed(2)}</th>
+                    <th className={styles.BodyTwo}>${(lastPayment && Number.isNaN(lastPayment) !== true) ? lastPayment.toLocaleString(undefined, { maximumFractionDigits: 2, minimumFractionDigits: 2 }) : nullVar.toFixed(2)}</th>
+                    <th className={styles.BodyThree}>${(lastPrincipal && Number.isNaN(lastPrincipal) !== true) ? lastPrincipal.toLocaleString(undefined, { maximumFractionDigits: 2, minimumFractionDigits: 2 }) : nullVar.toFixed(2)}</th>
+                    <th className={styles.BodyFour}>${(lastInterest && Number.isNaN(lastInterest) !== true) ? lastInterest.toLocaleString(undefined, { maximumFractionDigits: 2, minimumFractionDigits: 2 }) : nullVar.toFixed(2)}</th>
+                    <th className={styles.BodyFive}>${(lastTotalInterest && Number.isNaN(lastTotalInterest) !== true) ? lastTotalInterest.toLocaleString(undefined, { maximumFractionDigits: 2, minimumFractionDigits: 2 }) : nullVar.toFixed(2)}</th>
                     <th className={styles.BodySix}>${balance < 0 || Number.isNaN(balance) === true ? nullVar.toFixed(2) : balance.toLocaleString(undefined, { maximumFractionDigits: 2, minimumFractionDigits: 2 })}</th>
                 </tr>;
                 datesArray[datesArray.length - 1] = (nameOfMonths[counter - 2] + ' ' + day + ', ' + counterYears);
