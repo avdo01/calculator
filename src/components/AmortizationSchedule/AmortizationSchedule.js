@@ -227,6 +227,23 @@ const AmortizationSchedule = ({ loanYears, loanMonths, payment, interestRate, lo
                 datesArray[datesArray.length - 1] = (nameOfMonths[counter - 2] + ' ' + day + ', ' + counterYears);
             }
         }
+        const returnToOneRow = () => {
+            var onlyInterest = interestPerMounth(interestRate, loanAmount);
+            var onlyTotalInterest = onlyInterest;
+            var onlyPayment = loanAmount + onlyInterest;
+            var onlyPrincipal = onlyPayment - onlyInterest;
+            var onlyBalance = 0;
+            tableRows[0] =
+                <tr className={styles.TableRow}>
+                    <th className={styles.BodyOne}>{nameOfMonthsShortcut[counter - 2]} {counterYears}</th>
+                    <th className={styles.BodyTwo}>${Number.isNaN(onlyPayment) === false ? onlyPayment.toLocaleString(undefined, { maximumFractionDigits: 2, minimumFractionDigits: 2 }) : nullVar.toFixed(2)}</th>
+                    <th className={styles.BodyThree}>${Number.isNaN(onlyPrincipal) === false ? onlyPrincipal.toLocaleString(undefined, { maximumFractionDigits: 2, minimumFractionDigits: 2 }) : nullVar.toFixed(2)}</th>
+                    <th className={styles.BodyFour}>${Number.isNaN(onlyInterest) === false ? onlyInterest.toLocaleString(undefined, { maximumFractionDigits: 2, minimumFractionDigits: 2 }) : nullVar.toFixed(2)}</th>
+                    <th className={styles.BodyFive}>${Number.isNaN(onlyTotalInterest) === false ? onlyTotalInterest.toLocaleString(undefined, { maximumFractionDigits: 2, minimumFractionDigits: 2 }) : nullVar.toFixed(2)}</th>
+                    <th className={styles.BodySix}>${onlyBalance < 0 || Number.isNaN(onlyBalance) === true ? nullVar.toFixed(2) : onlyBalance.toLocaleString(undefined, { maximumFractionDigits: 2, minimumFractionDigits: 2 })}</th>
+                </tr>;
+
+        }
         if (tableRows.length === 1) {
             var onlyInterest = interestPerMounth(interestRate, loanAmount);
             var onlyTotalInterest = onlyInterest;
@@ -256,6 +273,7 @@ const AmortizationSchedule = ({ loanYears, loanMonths, payment, interestRate, lo
             var secondPrincipal = firstBalance;
             var secondTotalInterest = firstInterest + secondInterest;
             var secondBalance = 0;
+            var condition = 0;
             if ((everyMounthIndex === currentMonth() && everyMounthAmount > 0) || (oneTimeYear === currentYear() && oneTimeMonth === currentMonth() && oneTimeAmount > 0)) {
                 var totalSum = parseFloat(everyMounthAmount) + parseFloat(oneTimeAmount);
                 var tempInterest = interestPerMounth(interestRate, loanAmount);
@@ -267,16 +285,37 @@ const AmortizationSchedule = ({ loanYears, loanMonths, payment, interestRate, lo
                 var secondPrincipalMonth = tempBalance;
                 var secondTotalInterestMonth = tempInterest + secondInterestMonth;
                 var secondBalanceMonth = 0;
-                tableRows[1] =
-                    <tr className={styles.TableRow}>
-                        <th className={styles.BodyOne}>{nameOfMonthsShortcut[counter - 2]} {counterYears}</th>
-                        <th className={styles.BodyTwo}>${Number.isNaN(secondPaymentMonth) === false ? secondPaymentMonth.toLocaleString(undefined, { maximumFractionDigits: 2, minimumFractionDigits: 2 }) : nullVar.toFixed(2)}</th>
-                        <th className={styles.BodyThree}>${Number.isNaN(secondPrincipalMonth) === false ? secondPrincipalMonth.toLocaleString(undefined, { maximumFractionDigits: 2, minimumFractionDigits: 2 }) : nullVar.toFixed(2)}</th>
-                        <th className={styles.BodyFour}>${Number.isNaN(secondInterestMonth) === false ? secondInterestMonth.toLocaleString(undefined, { maximumFractionDigits: 2, minimumFractionDigits: 2 }) : nullVar.toFixed(2)}</th>
-                        <th className={styles.BodyFive}>${Number.isNaN(secondTotalInterestMonth) === false ? secondTotalInterestMonth.toLocaleString(undefined, { maximumFractionDigits: 2, minimumFractionDigits: 2 }) : nullVar.toFixed(2)}</th>
-                        <th className={styles.BodySix}>${secondBalanceMonth < 0 || Number.isNaN(secondBalanceMonth) === true ? nullVar.toFixed(2) : secondBalanceMonth.toLocaleString(undefined, { maximumFractionDigits: 2, minimumFractionDigits: 2 })}</th>
-                    </tr>;
-
+                if (secondInterestMonth < 0) {
+                    console.log('aa');
+                    var onlyInterest = interestPerMounth(interestRate, loanAmount);
+                    var onlyTotalInterest = onlyInterest;
+                    var onlyPayment = loanAmount + onlyInterest;
+                    var onlyPrincipal = onlyPayment - onlyInterest;
+                    var onlyBalance = 0;
+                    tableRows[0] =
+                        <tr className={styles.TableRow}>
+                            <th className={styles.BodyOne}>{nameOfMonthsShortcut[counter - 2]} {counterYears}</th>
+                            <th className={styles.BodyTwo}>${Number.isNaN(onlyPayment) === false ? onlyPayment.toLocaleString(undefined, { maximumFractionDigits: 2, minimumFractionDigits: 2 }) : nullVar.toFixed(2)}</th>
+                            <th className={styles.BodyThree}>${Number.isNaN(onlyPrincipal) === false ? onlyPrincipal.toLocaleString(undefined, { maximumFractionDigits: 2, minimumFractionDigits: 2 }) : nullVar.toFixed(2)}</th>
+                            <th className={styles.BodyFour}>${Number.isNaN(onlyInterest) === false ? onlyInterest.toLocaleString(undefined, { maximumFractionDigits: 2, minimumFractionDigits: 2 }) : nullVar.toFixed(2)}</th>
+                            <th className={styles.BodyFive}>${Number.isNaN(onlyTotalInterest) === false ? onlyTotalInterest.toLocaleString(undefined, { maximumFractionDigits: 2, minimumFractionDigits: 2 }) : nullVar.toFixed(2)}</th>
+                            <th className={styles.BodySix}>${onlyBalance < 0 || Number.isNaN(onlyBalance) === true ? nullVar.toFixed(2) : onlyBalance.toLocaleString(undefined, { maximumFractionDigits: 2, minimumFractionDigits: 2 })}</th>
+                        </tr>;
+                    condition++;
+                }
+                if (condition === 0) {
+                    tableRows[1] =
+                        <tr className={styles.TableRow}>
+                            <th className={styles.BodyOne}>{nameOfMonthsShortcut[counter - 2]} {counterYears}</th>
+                            <th className={styles.BodyTwo}>${Number.isNaN(secondPaymentMonth) === false ? secondPaymentMonth.toLocaleString(undefined, { maximumFractionDigits: 2, minimumFractionDigits: 2 }) : nullVar.toFixed(2)}</th>
+                            <th className={styles.BodyThree}>${Number.isNaN(secondPrincipalMonth) === false ? secondPrincipalMonth.toLocaleString(undefined, { maximumFractionDigits: 2, minimumFractionDigits: 2 }) : nullVar.toFixed(2)}</th>
+                            <th className={styles.BodyFour}>${Number.isNaN(secondInterestMonth) === false ? secondInterestMonth.toLocaleString(undefined, { maximumFractionDigits: 2, minimumFractionDigits: 2 }) : nullVar.toFixed(2)}</th>
+                            <th className={styles.BodyFive}>${Number.isNaN(secondTotalInterestMonth) === false ? secondTotalInterestMonth.toLocaleString(undefined, { maximumFractionDigits: 2, minimumFractionDigits: 2 }) : nullVar.toFixed(2)}</th>
+                            <th className={styles.BodySix}>${secondBalanceMonth < 0 || Number.isNaN(secondBalanceMonth) === true ? nullVar.toFixed(2) : secondBalanceMonth.toLocaleString(undefined, { maximumFractionDigits: 2, minimumFractionDigits: 2 })}</th>
+                        </tr>;
+                } else {
+                    tableRows[1] = null;
+                }
             }
             else {
                 tableRows[1] =
