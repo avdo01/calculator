@@ -33,8 +33,13 @@ const AmortizationSchedule = ({ loanYears, loanMonths, payment, interestRate, lo
     }, [loanYears, loanMonths]);
 
     useEffect(() => {
-        datesArray[datesArray.length - 1] =
+        if (datesArray[datesArray.length - 1].includes("undefined")) {
+            datesArray[datesArray.length - 1] = datesArray[datesArray.length - 2];
+            setFutureDate(datesArray[datesArray.length - 2]);
+        }
+        else {
             setFutureDate(datesArray[datesArray.length - 1]);
+        }
     });
 
     const interestPerMounth = (interestRate, pmtt) => {
@@ -95,7 +100,6 @@ const AmortizationSchedule = ({ loanYears, loanMonths, payment, interestRate, lo
             }
             if (counter === currentMonthIndex && startMonth === false) {
                 payment = (parseFloat(payment) + parseFloat(everyMounthAmount));
-                principal = payment - interest;
             }
             if (startMonth === true && counter === currentMonthIndex && coMounth === 0) {
                 payment = (parseFloat(payment) + parseFloat(everyMounthAmount));
@@ -164,7 +168,6 @@ const AmortizationSchedule = ({ loanYears, loanMonths, payment, interestRate, lo
             }
             if (counter === currentMonthIndex && startMonth === false) {
                 payment = (parseFloat(payment) - parseFloat(everyMounthAmount));
-                principal = payment - interest;
             }
             if (counterYears === oneTimeYear && counter === oneTimeMonth + 1 && startYear === false) {
                 payment = (parseFloat(payment) - parseFloat(oneTimeAmount));
