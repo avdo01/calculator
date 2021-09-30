@@ -12,6 +12,7 @@ const AmortizationSchedule = ({ loanYears, loanMonths, payment, interestRate, lo
     const currentMonthIndex = everyMounthIndex + 1;
     var previousMonthIndex;
     var datesArray = [];
+    var yearsArray = [];
     if (currentMonthIndex > 1) {
         previousMonthIndex = currentMonthIndex - 1;
     }
@@ -33,12 +34,14 @@ const AmortizationSchedule = ({ loanYears, loanMonths, payment, interestRate, lo
     }, [loanYears, loanMonths]);
 
     useEffect(() => {
-        if (datesArray[datesArray.length - 1].includes("undefined")) {
-            datesArray[datesArray.length - 1] = datesArray[datesArray.length - 2];
-            setFutureDate(datesArray[datesArray.length - 2]);
+        var date = new Date();
+        if (nameOfMonths[datesArray[datesArray.length - 2]] !== undefined) {
+            var temp = nameOfMonths[datesArray[datesArray.length - 2]] + ' ' + date.getDate() + ', ' + yearsArray[yearsArray.length - 1];
+            setFutureDate(temp);
         }
         else {
-            setFutureDate(datesArray[datesArray.length - 1]);
+            var tempp = nameOfMonths[(date.getMonth() + 2) + ' ' + date.getDate() + ', ' + yearsArray[yearsArray.length - 1]];
+            setFutureDate(tempp);
         }
     });
 
@@ -59,273 +62,150 @@ const AmortizationSchedule = ({ loanYears, loanMonths, payment, interestRate, lo
     const addTableRows = (loanMonths) => {
         var date = new Date();
         var tableRows = [];
+        var paymentArray = [];
+        var principalArray = [];
         var interestArray = [];
         var balanceArray = [];
         var totalInterestArray = [];
-        var day = date.getDate();
-        var counter = currentMonth() + 1;
-        var counterYears = currentYear();
-        if (addMonthlyPayment) {
-            payment = (parseFloat(payment) + parseFloat(addMonthlyPayment));
+        var nullVar = 0;
+        var paymentt = payment;
+        if (addMonthlyPayment > 0) {
+            paymentt += parseFloat(addMonthlyPayment);
         }
         var interest = interestPerMounth(interestRate, loanAmount);
-        var principal = (payment - interest);
-        var balance = (loanAmount - principal);
-        var totalInt = parseFloat(interest);
-        var firstBalanceMonthStart = balance - everyMounthAmount - oneTimeAmount;
-        var secondInterestMonthStart = interestPerMounth(interestRate, firstBalanceMonthStart);
-        var sum = loanAmount;
-        var sumOne = loanAmount;
-        var coMounth = 0;
-        var startMonth;
-        var startYear;
-        if (everyMounthIndex === (counter - 1)) {
-            startMonth = true;
-        } else {
-            startMonth = false;
-        }
-        if (oneTimeMonth === (counter - 1) && oneTimeYear === counterYears) {
-            startYear = true;
-        } else {
-            startYear = false;
-        }
+        var principal = paymentt - interest;
+        var balance = loanAmount - principal;
+        var totalInterest = interest;
+        var currentMonth = date.getMonth() + 1;
+        var currentYear = date.getFullYear();
+        var counterMonths = currentMonth + 1;
+        paymentArray.push(paymentt);
+        principalArray.push(principal);
+        interestArray.push(interest);
+        balanceArray.push(balance);
+
+        console.log(oneTimeMonth, everyMounthIndex);
+        console.log('start')
         for (var i = 0; i < loanMonths; i++) {
-            if (counterYears === oneTimeYear && counter === oneTimeMonth + 1 && startYear === false) {
-                payment = (parseFloat(payment) + parseFloat(oneTimeAmount));
+            console.log(counterMonths)
+            datesArray.push(counterMonths);
+            yearsArray.push(currentYear);
+            if ((oneTimeMonth === counterMonths && oneTimeYear === currentYear)) {
+                // if (i === 0) {
+                //     paymentt = paymentt + parseFloat(oneTimeAmount);
+                //     interest = interestPerMounth(interestRate, loanAmount);
+                //     principal = parseFloat(paymentt) - parseFloat(interest);
+                //     balance = loanAmount - principal;
+                // }
+                // else {
+                paymentt = paymentt + parseFloat(oneTimeAmount);
+                principal = parseFloat(paymentt) - parseFloat(interest);
+                balance = balance - (parseFloat(oneTimeAmount));
+                // }
             }
-            if (counterYears === oneTimeYear && counter === oneTimeMonth + 1 && startYear === true) {
-                payment = (parseFloat(payment) + parseFloat(oneTimeAmount));
-                interest = interestPerMounth(interestRate, sumOne);
-                principal = payment - interest;
+            if ((everyMounthIndex === counterMonths)) {
+                if (i === 0) {
+                    paymentt = paymentt + parseFloat(everyMounthAmount);
+                    interest = interestPerMounth(interestRate, loanAmount);
+                    principal = parseFloat(paymentt) - parseFloat(interest);
+                    balance = loanAmount - principal;
+                }
+                else {
+                    paymentt = paymentt + parseFloat(everyMounthAmount);
+                    principal = parseFloat(paymentt) - parseFloat(interest);
+                    balance = balance - (parseFloat(everyMounthAmount));
+                }
             }
-            if (counter === currentMonthIndex && startMonth === false) {
-                payment = (parseFloat(payment) + parseFloat(everyMounthAmount));
+            tableRows.push(
+                <tr className={styles.TableRow}>
+                    <th className={styles.BodyOne}>{nameOfMonthsShortcut[counterMonths - 1]} {currentYear}</th>
+                    <th className={styles.BodyTwo}>${paymentt.toLocaleString(undefined, { maximumFractionDigits: 2, minimumFractionDigits: 2 })}</th>
+                    <th className={styles.BodyThree}>${principal.toLocaleString(undefined, { maximumFractionDigits: 2, minimumFractionDigits: 2 })}</th>
+                    <th className={styles.BodyFour}>${interest.toLocaleString(undefined, { maximumFractionDigits: 2, minimumFractionDigits: 2 })}</th>
+                    <th className={styles.BodyFive}>${totalInterest.toLocaleString(undefined, { maximumFractionDigits: 2, minimumFractionDigits: 2 })}</th>
+                    <th className={styles.BodySix}>${balance.toLocaleString(undefined, { maximumFractionDigits: 2, minimumFractionDigits: 2 })}</th>
+                </tr>
+            )
+            if ((oneTimeMonth === counterMonths && oneTimeYear === currentYear)) {
+                // if (i === 0) {
+                //     paymentt = paymentt - parseFloat(oneTimeAmount);
+                // }
+                // else {
+                paymentt = paymentt - parseFloat(oneTimeAmount);
+                // }
             }
-            if (startMonth === true && counter === currentMonthIndex && coMounth === 0) {
-                payment = (parseFloat(payment) + parseFloat(everyMounthAmount));
-                interest = interestPerMounth(interestRate, sum);
-                principal = payment - interest;
-                balance -= parseFloat(everyMounthAmount);
-                sum = balance;
-                coMounth++;
+            if ((everyMounthIndex === counterMonths)) {
+                if (i === 0) {
+                    paymentt = paymentt - parseFloat(everyMounthAmount);
+                }
+                else {
+                    paymentt = paymentt - parseFloat(everyMounthAmount);
+                }
             }
-            if (i === 0 && oneTimeAmount > 0 && oneTimeYear === currentYear()) {
-                tableRows.push(
-                    <tr className={styles.TableRow}>
-                        <th className={styles.BodyOne}>{nameOfMonthsShortcut[counter - 1]} {counterYears}</th>
-                        <th className={styles.BodyTwo}>${Number.isNaN(payment) === false ? payment.toLocaleString(undefined, { maximumFractionDigits: 2, minimumFractionDigits: 2 }) : nullVar.toFixed(2)}</th>
-                        <th className={styles.BodyThree}>${Number.isNaN(principal) === false ? principal.toLocaleString(undefined, { maximumFractionDigits: 2, minimumFractionDigits: 2 }) : nullVar.toFixed(2)}</th>
-                        <th className={styles.BodyFour}>${Number.isNaN(interest) === false ? interest.toLocaleString(undefined, { maximumFractionDigits: 2, minimumFractionDigits: 2 }) : nullVar.toFixed(2)}</th>
-                        <th className={styles.BodyFive}>${Number.isNaN(totalInt) === false ? totalInt.toLocaleString(undefined, { maximumFractionDigits: 2, minimumFractionDigits: 2 }) : nullVar.toFixed(2)}</th>
-                        <th className={styles.BodySix}>${firstBalanceMonthStart < 0 || Number.isNaN(firstBalanceMonthStart) === true ? nullVar.toFixed(2) : firstBalanceMonthStart.toLocaleString(undefined, { maximumFractionDigits: 2, minimumFractionDigits: 2 })}</th>
-                    </tr>
-                )
-            } else if (i === 1 && oneTimeAmount > 0 && oneTimeYear === currentYear()) {
-                tableRows.push(
-                    <tr className={styles.TableRow}>
-                        <th className={styles.BodyOne}>{nameOfMonthsShortcut[counter - 1]} {counterYears}</th>
-                        <th className={styles.BodyTwo}>${Number.isNaN(payment) === false ? payment.toLocaleString(undefined, { maximumFractionDigits: 2, minimumFractionDigits: 2 }) : nullVar.toFixed(2)}</th>
-                        <th className={styles.BodyThree}>${Number.isNaN(principal) === false ? principal.toLocaleString(undefined, { maximumFractionDigits: 2, minimumFractionDigits: 2 }) : nullVar.toFixed(2)}</th>
-                        <th className={styles.BodyFour}>${Number.isNaN(secondInterestMonthStart) === false ? secondInterestMonthStart.toLocaleString(undefined, { maximumFractionDigits: 2, minimumFractionDigits: 2 }) : nullVar.toFixed(2)}</th>
-                        <th className={styles.BodyFive}>${Number.isNaN(totalInt) === false ? totalInt.toLocaleString(undefined, { maximumFractionDigits: 2, minimumFractionDigits: 2 }) : nullVar.toFixed(2)}</th>
-                        <th className={styles.BodySix}>${balance < 0 || Number.isNaN(balance) === true ? nullVar.toFixed(2) : balance.toLocaleString(undefined, { maximumFractionDigits: 2, minimumFractionDigits: 2 })}</th>
-                    </tr>
-                )
-            }
-            else {
-                tableRows.push(
-                    <tr className={styles.TableRow}>
-                        <th className={styles.BodyOne}>{nameOfMonthsShortcut[counter - 1]} {counterYears}</th>
-                        <th className={styles.BodyTwo}>${Number.isNaN(payment) === false ? payment.toLocaleString(undefined, { maximumFractionDigits: 2, minimumFractionDigits: 2 }) : nullVar.toFixed(2)}</th>
-                        <th className={styles.BodyThree}>${Number.isNaN(principal) === false ? principal.toLocaleString(undefined, { maximumFractionDigits: 2, minimumFractionDigits: 2 }) : nullVar.toFixed(2)}</th>
-                        <th className={styles.BodyFour}>${Number.isNaN(interest) === false ? interest.toLocaleString(undefined, { maximumFractionDigits: 2, minimumFractionDigits: 2 }) : nullVar.toFixed(2)}</th>
-                        <th className={styles.BodyFive}>${Number.isNaN(totalInt) === false ? totalInt.toLocaleString(undefined, { maximumFractionDigits: 2, minimumFractionDigits: 2 }) : nullVar.toFixed(2)}</th>
-                        <th className={styles.BodySix}>${balance < 0 || Number.isNaN(balance) === true ? nullVar.toFixed(2) : balance.toLocaleString(undefined, { maximumFractionDigits: 2, minimumFractionDigits: 2 })}</th>
-                    </tr>
-                )
-            }
-            datesArray.push(nameOfMonths[counter - 1] + ' ' + day + ', ' + counterYears);
+            // Smanjuje vrijednosti svega
+            interest = interestPerMounth(interestRate, balance);
+            totalInterest += interest;
+            principal = paymentt - interest;
+            balance = balance - principal;
+            interestArray.push(interest);
+            principalArray.push(principal);
+            balanceArray.push(balance);
+            totalInterestArray.push(totalInterest);
+            // Pomjera mjesece i godine u tablei
+            counterMonths++;
             if (interest < 0) {
-                var lastPayment = balanceArray[balanceArray.length - 3] + parseFloat(interestArray[interestArray.length - 2]);
-                var lastPrincipal = balanceArray[balanceArray.length - 3];
-                var lastInterest = interestArray[interestArray.length - 2];
-                var lastTotalInterest = totalInterestArray[totalInterestArray.length - 3] + lastInterest;
-                // console.log('payment', lastPayment);
-                // console.log('----', parseFloat(interestArray[interestArray.length - 2]));
-                // console.log('---->', balanceArray[balanceArray.length - 3]);
-                // console.log('BBB', parseFloat(balanceArray[balanceArray.length - 3]) + parseFloat(interestArray[interestArray.length - 2]));
-                tableRows.pop();
-                tableRows[tableRows.length - 1] = <tr className={styles.TableRow}>
-                    <th className={styles.BodyOne}>{nameOfMonthsShortcut[counter - 2]} {counterYears}</th>
-                    <th className={styles.BodyTwo}>${(lastPayment && Number.isNaN(lastPayment) !== true) ? lastPayment.toLocaleString(undefined, { maximumFractionDigits: 2, minimumFractionDigits: 2 }) : nullVar.toFixed(2)}</th>
-                    <th className={styles.BodyThree}>${(lastPrincipal && Number.isNaN(lastPrincipal) !== true) ? lastPrincipal.toLocaleString(undefined, { maximumFractionDigits: 2, minimumFractionDigits: 2 }) : nullVar.toFixed(2)}</th>
-                    <th className={styles.BodyFour}>${(lastInterest && Number.isNaN(lastInterest) !== true) ? lastInterest.toLocaleString(undefined, { maximumFractionDigits: 2, minimumFractionDigits: 2 }) : nullVar.toFixed(2)}</th>
-                    <th className={styles.BodyFive}>${(lastTotalInterest && Number.isNaN(lastTotalInterest) !== true) ? lastTotalInterest.toLocaleString(undefined, { maximumFractionDigits: 2, minimumFractionDigits: 2 }) : nullVar.toFixed(2)}</th>
-                    <th className={styles.BodySix}>${balance < 0 || Number.isNaN(balance) === true ? nullVar.toFixed(2) : balance.toLocaleString(undefined, { maximumFractionDigits: 2, minimumFractionDigits: 2 })}</th>
-                </tr>;
-                datesArray[datesArray.length - 1] = (nameOfMonths[counter - 2] + ' ' + day + ', ' + counterYears);
                 break;
             }
-            if (counter === currentMonthIndex && startMonth === false) {
-                payment = (parseFloat(payment) - parseFloat(everyMounthAmount));
-            }
-            if (counterYears === oneTimeYear && counter === oneTimeMonth + 1 && startYear === false) {
-                payment = (parseFloat(payment) - parseFloat(oneTimeAmount));
-            }
-            if (counterYears === oneTimeYear && counter === oneTimeMonth + 1 && startYear === true) {
-                payment = (parseFloat(payment) - parseFloat(oneTimeAmount));
-                interest = interestPerMounth(interestRate, sumOne);
-                principal = payment - interest;
-                balance -= parseFloat(oneTimeAmount);
-                sumOne = balance;
-            }
-            interest = interestPerMounth(interestRate, balance);
-            totalInt = parseFloat(parseFloat(totalInt) + parseFloat(interest));
-            if (counterYears === oneTimeYear && counter === oneTimeMonth) {
-                payment = (parseFloat(payment) + parseFloat(oneTimeAmount));
-            }
-            if (counter === previousMonthIndex) {
-                payment = (parseFloat(payment) + parseFloat(everyMounthAmount));
-            }
-            principal = (payment - interest);
-            balance = (parseFloat(balance) - parseFloat(principal));
-            if (startMonth === true && counter === currentMonthIndex && coMounth === 1) {
-                payment = (parseFloat(payment) - parseFloat(everyMounthAmount));
-                interest = interestPerMounth(interestRate, sum);
-                principal = payment - interest;
-                balance += (parseFloat(everyMounthAmount));
-                sum = balance;
-                coMounth++;
-            }
-            if (counter === previousMonthIndex) {
-                payment = (parseFloat(payment) - parseFloat(everyMounthAmount));
-            }
-            if (counterYears === oneTimeYear && counter === oneTimeMonth) {
-                payment = (parseFloat(payment) - parseFloat(oneTimeAmount));
-            }
-            counter++;
-            interestArray.push(interest);
-            balanceArray.push(balance);
-            totalInterestArray.push(totalInt);
-            if (counter > 12) {
-                counter = 1;
-                counterYears += 1;
-            }
-            if (i === loanMonths - 1) {
-                var lastPayment = balanceArray[balanceArray.length - 3] + parseFloat(interestArray[interestArray.length - 2]);
-                var lastPrincipal = balanceArray[balanceArray.length - 3];
-                var lastInterest = interestArray[interestArray.length - 2];
-                var lastTotalInterest = totalInterestArray[totalInterestArray.length - 3] + lastInterest;
-                tableRows[tableRows.length - 1] = <tr className={styles.TableRow}>
-                    <th className={styles.BodyOne}>{nameOfMonthsShortcut[counter - 2]} {counterYears}</th>
-                    <th className={styles.BodyTwo}>${(lastPayment && Number.isNaN(lastPayment) !== true) ? lastPayment.toLocaleString(undefined, { maximumFractionDigits: 2, minimumFractionDigits: 2 }) : nullVar.toFixed(2)}</th>
-                    <th className={styles.BodyThree}>${(lastPrincipal && Number.isNaN(lastPrincipal) !== true) ? lastPrincipal.toLocaleString(undefined, { maximumFractionDigits: 2, minimumFractionDigits: 2 }) : nullVar.toFixed(2)}</th>
-                    <th className={styles.BodyFour}>${(lastInterest && Number.isNaN(lastInterest) !== true) ? lastInterest.toLocaleString(undefined, { maximumFractionDigits: 2, minimumFractionDigits: 2 }) : nullVar.toFixed(2)}</th>
-                    <th className={styles.BodyFive}>${(lastTotalInterest && Number.isNaN(lastTotalInterest) !== true) ? lastTotalInterest.toLocaleString(undefined, { maximumFractionDigits: 2, minimumFractionDigits: 2 }) : nullVar.toFixed(2)}</th>
-                    <th className={styles.BodySix}>${balance < 0 || Number.isNaN(balance) === true ? nullVar.toFixed(2) : balance.toLocaleString(undefined, { maximumFractionDigits: 2, minimumFractionDigits: 2 })}</th>
-                </tr>;
-                datesArray[datesArray.length - 1] = (nameOfMonths[counter - 2] + ' ' + day + ', ' + counterYears);
+            if (counterMonths > 12) {
+                counterMonths = 1;
+                currentYear++;
             }
         }
-        const returnToOneRow = () => {
-            var onlyInterest = interestPerMounth(interestRate, loanAmount);
-            var onlyTotalInterest = onlyInterest;
-            var onlyPayment = loanAmount + onlyInterest;
-            var onlyPrincipal = onlyPayment - onlyInterest;
-            var onlyBalance = 0;
-            tableRows[0] =
+        // Korekcija zadnjeg reda
+        if (tableRows.length > 1) {
+            var lastPayment = balanceArray[balanceArray.length - 3] + interestArray[interestArray.length - 2];
+            var lastTotalInterest = interestArray[interestArray.length - 2] + totalInterestArray[totalInterestArray.length - 3];
+            tableRows[tableRows.length - 1] =
                 <tr className={styles.TableRow}>
-                    <th className={styles.BodyOne}>{nameOfMonthsShortcut[counter - 2]} {counterYears}</th>
-                    <th className={styles.BodyTwo}>${Number.isNaN(onlyPayment) === false ? onlyPayment.toLocaleString(undefined, { maximumFractionDigits: 2, minimumFractionDigits: 2 }) : nullVar.toFixed(2)}</th>
-                    <th className={styles.BodyThree}>${Number.isNaN(onlyPrincipal) === false ? onlyPrincipal.toLocaleString(undefined, { maximumFractionDigits: 2, minimumFractionDigits: 2 }) : nullVar.toFixed(2)}</th>
-                    <th className={styles.BodyFour}>${Number.isNaN(onlyInterest) === false ? onlyInterest.toLocaleString(undefined, { maximumFractionDigits: 2, minimumFractionDigits: 2 }) : nullVar.toFixed(2)}</th>
-                    <th className={styles.BodyFive}>${Number.isNaN(onlyTotalInterest) === false ? onlyTotalInterest.toLocaleString(undefined, { maximumFractionDigits: 2, minimumFractionDigits: 2 }) : nullVar.toFixed(2)}</th>
-                    <th className={styles.BodySix}>${onlyBalance < 0 || Number.isNaN(onlyBalance) === true ? nullVar.toFixed(2) : onlyBalance.toLocaleString(undefined, { maximumFractionDigits: 2, minimumFractionDigits: 2 })}</th>
+                    <th className={styles.BodyOne}>{nameOfMonthsShortcut[counterMonths - 2]} {currentYear}</th>
+                    <th className={styles.BodyTwo}>${!undefined ? lastPayment.toLocaleString(undefined, { maximumFractionDigits: 2, minimumFractionDigits: 2 }) : null}</th>
+                    <th className={styles.BodyThree}>${!undefined ? balanceArray[balanceArray.length - 3].toLocaleString(undefined, { maximumFractionDigits: 2, minimumFractionDigits: 2 }) : null}</th>
+                    <th className={styles.BodyFour}>${!undefined ? interestArray[interestArray.length - 2].toLocaleString(undefined, { maximumFractionDigits: 2, minimumFractionDigits: 2 }) : null}</th>
+                    <th className={styles.BodyFive}>${!undefined ? lastTotalInterest.toLocaleString(undefined, { maximumFractionDigits: 2, minimumFractionDigits: 2 }) : null}</th>
+                    <th className={styles.BodySix}>${nullVar.toLocaleString(undefined, { maximumFractionDigits: 2, minimumFractionDigits: 2 })}</th>
                 </tr>;
-
         }
         if (tableRows.length === 1) {
-            var onlyInterest = interestPerMounth(interestRate, loanAmount);
-            var onlyTotalInterest = onlyInterest;
-            var onlyPayment = loanAmount + onlyInterest;
-            var onlyPrincipal = onlyPayment - onlyInterest;
-            var onlyBalance = 0;
             tableRows[0] =
                 <tr className={styles.TableRow}>
-                    <th className={styles.BodyOne}>{nameOfMonthsShortcut[counter - 2]} {counterYears}</th>
-                    <th className={styles.BodyTwo}>${Number.isNaN(onlyPayment) === false ? onlyPayment.toLocaleString(undefined, { maximumFractionDigits: 2, minimumFractionDigits: 2 }) : nullVar.toFixed(2)}</th>
-                    <th className={styles.BodyThree}>${Number.isNaN(onlyPrincipal) === false ? onlyPrincipal.toLocaleString(undefined, { maximumFractionDigits: 2, minimumFractionDigits: 2 }) : nullVar.toFixed(2)}</th>
-                    <th className={styles.BodyFour}>${Number.isNaN(onlyInterest) === false ? onlyInterest.toLocaleString(undefined, { maximumFractionDigits: 2, minimumFractionDigits: 2 }) : nullVar.toFixed(2)}</th>
-                    <th className={styles.BodyFive}>${Number.isNaN(onlyTotalInterest) === false ? onlyTotalInterest.toLocaleString(undefined, { maximumFractionDigits: 2, minimumFractionDigits: 2 }) : nullVar.toFixed(2)}</th>
-                    <th className={styles.BodySix}>${onlyBalance < 0 || Number.isNaN(onlyBalance) === true ? nullVar.toFixed(2) : onlyBalance.toLocaleString(undefined, { maximumFractionDigits: 2, minimumFractionDigits: 2 })}</th>
+                    <th className={styles.BodyOne}>{nameOfMonthsShortcut[counterMonths - 2]} {currentYear}</th>
+                    <th className={styles.BodyTwo}>${!undefined ? (loanAmount + interestPerMounth(interestRate, loanAmount)).toLocaleString(undefined, { maximumFractionDigits: 2, minimumFractionDigits: 2 }) : null}</th>
+                    <th className={styles.BodyThree}>${!undefined ? (loanAmount).toLocaleString(undefined, { maximumFractionDigits: 2, minimumFractionDigits: 2 }) : null}</th>
+                    <th className={styles.BodyFour}>${!undefined ? interestArray[interestArray.length - 2].toLocaleString(undefined, { maximumFractionDigits: 2, minimumFractionDigits: 2 }) : null}</th>
+                    <th className={styles.BodyFive}>${!undefined ? (interestPerMounth(interestRate, loanAmount)).toLocaleString(undefined, { maximumFractionDigits: 2, minimumFractionDigits: 2 }) : null}</th>
+                    <th className={styles.BodySix}>${nullVar.toLocaleString(undefined, { maximumFractionDigits: 2, minimumFractionDigits: 2 })}</th>
                 </tr>;
-
         }
         if (tableRows.length === 2) {
-            var onlyTwoInterest = interestPerMounth(interestRate, loanAmount);
-            var firstPayment = payment;
-            var firstPrincipal = payment - onlyTwoInterest;
-            var firstInterest = interestPerMounth(interestRate, loanAmount);
-            var firstTotalInterest = interestPerMounth(interestRate, loanAmount);
-            var firstBalance = loanAmount - firstPrincipal;
-            var secondInterest = interestPerMounth(interestRate, firstBalance);
-            var secondPayment = firstBalance + secondInterest;
-            var secondPrincipal = firstBalance;
-            var secondTotalInterest = firstInterest + secondInterest;
-            var secondBalance = 0;
-            var condition = 0;
-            if ((everyMounthIndex === currentMonth() && everyMounthAmount > 0) || (oneTimeYear === currentYear() && oneTimeMonth === currentMonth() && oneTimeAmount > 0)) {
-                var totalSum = parseFloat(everyMounthAmount) + parseFloat(oneTimeAmount);
-                var tempInterest = interestPerMounth(interestRate, loanAmount);
-                var tempPayment = payment + totalSum;
-                var tempPrincipal = tempPayment - tempInterest;
-                var tempBalance = loanAmount - tempPrincipal;
-                var secondInterestMonth = interestPerMounth(interestRate, tempBalance);
-                var secondPaymentMonth = tempBalance + secondInterestMonth;
-                var secondPrincipalMonth = tempBalance;
-                var secondTotalInterestMonth = tempInterest + secondInterestMonth;
-                var secondBalanceMonth = 0;
-                if (secondInterestMonth < 0) {
-                    console.log('aa');
-                    var onlyInterest = interestPerMounth(interestRate, loanAmount);
-                    var onlyTotalInterest = onlyInterest;
-                    var onlyPayment = loanAmount + onlyInterest;
-                    var onlyPrincipal = onlyPayment - onlyInterest;
-                    var onlyBalance = 0;
-                    tableRows[0] =
-                        <tr className={styles.TableRow}>
-                            <th className={styles.BodyOne}>{nameOfMonthsShortcut[counter - 2]} {counterYears}</th>
-                            <th className={styles.BodyTwo}>${Number.isNaN(onlyPayment) === false ? onlyPayment.toLocaleString(undefined, { maximumFractionDigits: 2, minimumFractionDigits: 2 }) : nullVar.toFixed(2)}</th>
-                            <th className={styles.BodyThree}>${Number.isNaN(onlyPrincipal) === false ? onlyPrincipal.toLocaleString(undefined, { maximumFractionDigits: 2, minimumFractionDigits: 2 }) : nullVar.toFixed(2)}</th>
-                            <th className={styles.BodyFour}>${Number.isNaN(onlyInterest) === false ? onlyInterest.toLocaleString(undefined, { maximumFractionDigits: 2, minimumFractionDigits: 2 }) : nullVar.toFixed(2)}</th>
-                            <th className={styles.BodyFive}>${Number.isNaN(onlyTotalInterest) === false ? onlyTotalInterest.toLocaleString(undefined, { maximumFractionDigits: 2, minimumFractionDigits: 2 }) : nullVar.toFixed(2)}</th>
-                            <th className={styles.BodySix}>${onlyBalance < 0 || Number.isNaN(onlyBalance) === true ? nullVar.toFixed(2) : onlyBalance.toLocaleString(undefined, { maximumFractionDigits: 2, minimumFractionDigits: 2 })}</th>
-                        </tr>;
-                    condition++;
-                }
-                if (condition === 0) {
-                    tableRows[1] =
-                        <tr className={styles.TableRow}>
-                            <th className={styles.BodyOne}>{nameOfMonthsShortcut[counter - 2]} {counterYears}</th>
-                            <th className={styles.BodyTwo}>${Number.isNaN(secondPaymentMonth) === false ? secondPaymentMonth.toLocaleString(undefined, { maximumFractionDigits: 2, minimumFractionDigits: 2 }) : nullVar.toFixed(2)}</th>
-                            <th className={styles.BodyThree}>${Number.isNaN(secondPrincipalMonth) === false ? secondPrincipalMonth.toLocaleString(undefined, { maximumFractionDigits: 2, minimumFractionDigits: 2 }) : nullVar.toFixed(2)}</th>
-                            <th className={styles.BodyFour}>${Number.isNaN(secondInterestMonth) === false ? secondInterestMonth.toLocaleString(undefined, { maximumFractionDigits: 2, minimumFractionDigits: 2 }) : nullVar.toFixed(2)}</th>
-                            <th className={styles.BodyFive}>${Number.isNaN(secondTotalInterestMonth) === false ? secondTotalInterestMonth.toLocaleString(undefined, { maximumFractionDigits: 2, minimumFractionDigits: 2 }) : nullVar.toFixed(2)}</th>
-                            <th className={styles.BodySix}>${secondBalanceMonth < 0 || Number.isNaN(secondBalanceMonth) === true ? nullVar.toFixed(2) : secondBalanceMonth.toLocaleString(undefined, { maximumFractionDigits: 2, minimumFractionDigits: 2 })}</th>
-                        </tr>;
-                } else {
-                    tableRows[1] = null;
-                }
-            }
-            else {
+            if (oneTimeAmount === 0) {
                 tableRows[1] =
                     <tr className={styles.TableRow}>
-                        <th className={styles.BodyOne}>{nameOfMonthsShortcut[counter - 2]} {counterYears}</th>
-                        <th className={styles.BodyTwo}>${Number.isNaN(secondPayment) === false ? secondPayment.toLocaleString(undefined, { maximumFractionDigits: 2, minimumFractionDigits: 2 }) : nullVar.toFixed(2)}</th>
-                        <th className={styles.BodyThree}>${Number.isNaN(secondPrincipal) === false ? secondPrincipal.toLocaleString(undefined, { maximumFractionDigits: 2, minimumFractionDigits: 2 }) : nullVar.toFixed(2)}</th>
-                        <th className={styles.BodyFour}>${Number.isNaN(secondInterest) === false ? secondInterest.toLocaleString(undefined, { maximumFractionDigits: 2, minimumFractionDigits: 2 }) : nullVar.toFixed(2)}</th>
-                        <th className={styles.BodyFive}>${Number.isNaN(secondTotalInterest) === false ? secondTotalInterest.toLocaleString(undefined, { maximumFractionDigits: 2, minimumFractionDigits: 2 }) : nullVar.toFixed(2)}</th>
-                        <th className={styles.BodySix}>${secondBalance < 0 || Number.isNaN(secondBalance) === true ? nullVar.toFixed(2) : secondBalance.toLocaleString(undefined, { maximumFractionDigits: 2, minimumFractionDigits: 2 })}</th>
+                        <th className={styles.BodyOne}>{nameOfMonthsShortcut[counterMonths - 2]} {currentYear}</th>
+                        <th className={styles.BodyTwo}>${!undefined ? (balanceArray[0] - parseFloat(everyMounthAmount) + interestArray[interestArray.length - 2]).toLocaleString(undefined, { maximumFractionDigits: 2, minimumFractionDigits: 2 }) : null}</th>
+                        <th className={styles.BodyThree}>${!undefined ? (balanceArray[0] - parseFloat(everyMounthAmount)).toLocaleString(undefined, { maximumFractionDigits: 2, minimumFractionDigits: 2 }) : null}</th>
+                        <th className={styles.BodyFour}>${!undefined ? interestArray[interestArray.length - 2].toLocaleString(undefined, { maximumFractionDigits: 2, minimumFractionDigits: 2 }) : null}</th>
+                        <th className={styles.BodyFive}>${!undefined ? (interestArray[interestArray.length - 2] + interestPerMounth(interestRate, loanAmount)).toLocaleString(undefined, { maximumFractionDigits: 2, minimumFractionDigits: 2 }) : null}</th>
+                        <th className={styles.BodySix}>${nullVar.toLocaleString(undefined, { maximumFractionDigits: 2, minimumFractionDigits: 2 })}</th>
+                    </tr>;
+            } else {
+                tableRows[1] =
+                    <tr className={styles.TableRow}>
+                        <th className={styles.BodyOne}>{nameOfMonthsShortcut[counterMonths - 2]} {currentYear}</th>
+                        <th className={styles.BodyTwo}>${!undefined ? (balanceArray[0] - parseFloat(everyMounthAmount) - parseFloat(oneTimeAmount) + interestArray[interestArray.length - 2]).toLocaleString(undefined, { maximumFractionDigits: 2, minimumFractionDigits: 2 }) : null}</th>
+                        <th className={styles.BodyThree}>${!undefined ? (balanceArray[0] - parseFloat(everyMounthAmount) - parseFloat(oneTimeAmount)).toLocaleString(undefined, { maximumFractionDigits: 2, minimumFractionDigits: 2 }) : null}</th>
+                        <th className={styles.BodyFour}>${!undefined ? interestArray[interestArray.length - 2].toLocaleString(undefined, { maximumFractionDigits: 2, minimumFractionDigits: 2 }) : null}</th>
+                        <th className={styles.BodyFive}>${!undefined ? (interestArray[interestArray.length - 2] + interestPerMounth(interestRate, loanAmount)).toLocaleString(undefined, { maximumFractionDigits: 2, minimumFractionDigits: 2 }) : null}</th>
+                        <th className={styles.BodySix}>${nullVar.toLocaleString(undefined, { maximumFractionDigits: 2, minimumFractionDigits: 2 })}</th>
                     </tr>;
             }
         }

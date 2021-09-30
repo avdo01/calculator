@@ -88,7 +88,7 @@ const AddExtraPayments = ({ setAddMonthlyPayment, setEveryMounthAmount, setEvery
                                 {
                                     nameOfMonths.map((month, index) => {
                                         return (
-                                            <option key={index} value={index}>{month}</option>
+                                            <option key={index} value={index + 1}>{month}</option>
                                         )
                                     })
                                 }
@@ -117,7 +117,7 @@ const AddExtraPayments = ({ setAddMonthlyPayment, setEveryMounthAmount, setEvery
                                 {
                                     nameOfMonths.map((month, index) => {
                                         return (
-                                            <option key={index} value={index}>{month}</option>
+                                            <option key={index} value={index + 1}>{month}</option>
                                         )
                                     })
                                 }
