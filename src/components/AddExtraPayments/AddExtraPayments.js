@@ -127,7 +127,6 @@ const AddExtraPayments = ({ setAddMonthlyPayment, setEveryMounthAmount, setEvery
                                     setOneTimeYearX(parseFloat(e.target.value));
                                 }
                                 else {
-                                    console.log('nuuulaaaa');
                                     setOneTimeYearX(parseFloat(currentYear));
                                 }
 

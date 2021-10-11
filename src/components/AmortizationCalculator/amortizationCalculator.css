@@ -279,6 +279,9 @@ input[type=number]::placeholder{
     margin-left: 0px;
     align-items: center;
   }
+  .right-number-am{
+    font-size: 50px;
+  }
 }
 
 @media all and (min-width: 426px) and (max-width: 768px){
@@ -335,6 +338,9 @@ input[type=number]::placeholder{
     margin-bottom: 30px;
     margin-left: 0px;
     align-items: center;
+  }
+  .right-number-am{
+    font-size: 58px;
   }
 }
 

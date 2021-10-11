@@ -20,7 +20,6 @@ export const getNumberOfTableRows = (loanAmount, monthlyPayment, totalInterestVa
         numberOfRows += 1;
     }
 
-    console.log(counter);
     return numberOfRows;
 }
 

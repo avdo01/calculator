@@ -143,6 +143,7 @@ input[type=number]{
   }
   .right-number{
     margin-top: 10px;
+    font-size: 50px;
   }
 }
 
@@ -180,6 +181,9 @@ input[type=number]{
   .right-wrapper{
     margin-top: 40px;
     margin-right: 0px;
+  }
+  .right-number{
+    font-size: 50px;
   }
 }
 

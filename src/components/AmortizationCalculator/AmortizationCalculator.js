@@ -39,6 +39,9 @@ const AmortizationCalculator = () => {
         setLoanYears(loanMonths / 12);
     }, [loanMonths]);
 
+    
+    console.log('number', payment.toFixed().toString().length + 2, payment);
+
     const totalInterestt = (value, loanMonths, loanAmount) => {
         return (value * loanMonths) - loanAmount;
     }
@@ -50,7 +53,6 @@ const AmortizationCalculator = () => {
     const getDate = () => {
         var today = new Date();
         var date = (today.getMonth() + 1) + '/' + today.getDate() + '/' + today.getFullYear();
-        // console.log(date);
     }
 
     const handleClick = () => {

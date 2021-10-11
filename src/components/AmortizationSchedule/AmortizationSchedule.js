@@ -84,10 +84,7 @@ const AmortizationSchedule = ({ loanYears, loanMonths, payment, interestRate, lo
         interestArray.push(interest);
         balanceArray.push(balance);
 
-        console.log(oneTimeMonth, everyMounthIndex);
-        console.log('start')
         for (var i = 0; i < loanMonths; i++) {
-            console.log(counterMonths)
             datesArray.push(counterMonths);
             yearsArray.push(currentYear);
             if ((oneTimeMonth === counterMonths && oneTimeYear === currentYear)) {
