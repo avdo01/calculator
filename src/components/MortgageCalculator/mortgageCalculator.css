@@ -55,6 +55,22 @@
   color: #E5E5E5;
 }
 
+.left-content-down button:disabled{
+  padding: 8px 32px;
+  width: 198px;
+  height: 56px;
+  background: #A3915D;
+  border-radius: 3px;
+  font-family: Raleway;
+  font-style: normal;
+  font-weight: normal;
+  font-size: 18px;
+  line-height: 21px;
+  text-transform: capitalize;
+  color: #979090;
+  background-color: lightgray;
+}
+
 .right-wrapper{
   display: flex;
   flex-direction: column;
@@ -106,6 +122,11 @@ input[type=number]{
   width: 298px;
   height: 56px;
   color: #969696;
+}
+
+.invalid{
+  color: red;
+  font-size: 15px;
 }
 
 @media all and (min-width: 280px) and (max-width: 425px) {

@@ -44,3 +44,9 @@ export const getMonthIndex = (name) => {
         }
     }
 }
+
+export const getNumberWithCommas = (number) => {
+    var num = parseInt(number);
+    var numberCommas = num.toLocaleString(undefined, { maximumFractionDigits: 0, minimumFractionDigits: 0 })
+    return numberCommas;
+}

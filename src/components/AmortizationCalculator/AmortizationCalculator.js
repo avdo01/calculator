@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import AddExtraPayments from '../AddExtraPayments/AddExtraPayments';
 import AmortizationSchedule from '../AmortizationSchedule/AmortizationSchedule';
+import { getNumberWithCommas } from '../Mocks/mockData';
 import logo from '../photos/coolicon1.png';
 import './amortizationCalculator.css';
 
@@ -11,7 +12,7 @@ const AmortizationCalculator = () => {
     const [interestRate, setInterestRate] = useState();
     const [payment, setPayment] = useState(0);
     const [totalInterest, setTotalInterest] = useState(0);
-    // const [disabled, setDisabled] = useState(false);
+    const [disabled, setDisabled] = useState(false);
     const [amScheduleOpen, setAmScheduleOpen] = useState(false);
     const [addMonthlyPayment, setAddMonthlyPayment] = useState(0);
     const [everyMounthAmount, setEveryMounthAmount] = useState(0);
@@ -22,14 +23,14 @@ const AmortizationCalculator = () => {
     const [oneTimeYear, setOneTimeYear] = useState(0);
     const [isApplyed, setIsApplyed] = useState(false);
 
-    // useEffect(() => {
-    //     if (loanAmount < 1000 || loanAmount > 999999 || loanMonths > 480 || loanYears > 40 || interestRate > 99) {
-    //         setDisabled(true);
-    //     }
-    //     else {
-    //         setDisabled(false);
-    //     }
-    // }, [loanYears, loanMonths, loanAmount, interestRate]);
+    useEffect(() => {
+        if (loanAmount < 1 || loanAmount > 1000000000000000 || loanMonths > 1200 || loanYears > 100) {
+            setDisabled(true);
+        }
+        else {
+            setDisabled(false);
+        }
+    }, [loanYears, loanMonths, loanAmount, interestRate]);
 
     useEffect(() => {
         setLoanMonths(loanYears * 12);
@@ -40,7 +41,8 @@ const AmortizationCalculator = () => {
     }, [loanMonths]);
 
     
-    console.log('number', payment.toFixed().toString().length + 2, payment);
+    // console.log('number', payment.toFixed().toString().length + 2, payment);
+    const maximumValue = getNumberWithCommas(1000000000000000);
 
     const totalInterestt = (value, loanMonths, loanAmount) => {
         return (value * loanMonths) - loanAmount;
@@ -73,12 +75,12 @@ const AmortizationCalculator = () => {
                         <div className='inputs'>
                             <h2>Loan amount</h2>
                             <input type='number' value={loanAmount} onChange={(e) => setLoanAmount(parseFloat(e.target.value))} />
-                            {/* {loanAmount < 1000 || loanAmount > 999999 ? <div className='invalid'>Minimum value: $1000<br />Maximum value: $999999</div> : null} */}
+                            {loanAmount < 1 || loanAmount > 1000000000000000 ? <div className='invalid'>Minimum value: $1<br />Maximum value: ${maximumValue}</div> : null}
                         </div>
                         <div className='inputs'>
                             <h2>Loan term in years</h2>
                             <input type='number' value={loanYears} onChange={(e) => setLoanYears(parseFloat(e.target.value))} />
-                            {/* {loanYears > 40 ? <div className='invalid'>Maximum years: 40</div> : null} */}
+                            {loanYears > 100 ? <div className='invalid'>Maximum years: 100</div> : null}
                         </div>
                     </div>
                     <div className='left-am-line'>
@@ -90,7 +92,7 @@ const AmortizationCalculator = () => {
                         <div className='inputs'>
                             <h2>Loan term in months</h2>
                             <input type='number' value={loanMonths} onChange={(e) => setLoanMonths(parseFloat(e.target.value))} />
-                            {/* {loanMonths > 480 ? <div className='invalid'>Maximum months: 480</div> : null} */}
+                            {loanMonths > 1200 ? <div className='invalid'>Maximum months: 1200</div> : null}
 
                         </div>
                         <div className='inputs'>
@@ -100,7 +102,7 @@ const AmortizationCalculator = () => {
                         </div>
                     </div>
                     <div className='left-am-button'>
-                        <button onClick={() => handleClick()}>Calculate</button>
+                        <button disabled={disabled} onClick={() => handleClick()}>Calculate</button>
                         {!amScheduleOpen ?
                             <a onClick={() => amScheduleToggle()}><h2>Show amortization schedule</h2></a>
                             :
