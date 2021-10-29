@@ -6,7 +6,8 @@ import {
 import "./App.css";
 import AmortizationCalculator from "./components/AmortizationCalculator/AmortizationCalculator";
 import MortgageCalculator from "./components/MortgageCalculator/MortgageCalculator";
-
+import TodaysRates from "./components/TodaysRates/TodaysRates";
+import Rates from "./components/Rates/Rates";
 /**
  *
  * STEPS
@@ -25,7 +26,8 @@ function App() {
   return (
     <div className="App">
       <HashRouter>
-        <Route exact path="/" component={AmortizationCalculator} />
+        <Route exact path="/" component={TodaysRates} />
+        <Route exact path="/" component={Rates} />
       </HashRouter>
     </div>
   );

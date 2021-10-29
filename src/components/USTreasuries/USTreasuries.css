@@ -1,0 +1,157 @@
+.table-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding-top:60px;
+    padding-bottom: 60px;
+    border-top: 2px solid #A3915D;
+    width:86.8%;
+    max-width:1250px;
+    background-color: white;
+    margin-bottom: 90px;
+}
+.sifma {
+    margin-bottom:60px;
+}
+.table-header {
+    display: flex;
+    justify-content: space-between;
+    width:76.16%;
+    max-width:952px;
+    margin-bottom:60px;
+}
+.table-title {
+    display: flex;
+    align-items: center;
+}
+.table-title img {
+    width:20px;
+    height: 20px;
+    margin-top:5px;
+}
+.table-title .icon-class:hover {
+    display: flex;
+    flex-direction: column-reverse;
+    position: relative;
+    
+}
+.table-title .icon-class:hover .grey-box {
+    display:block;
+    background:#727171;
+    color:white;
+    width:275px;
+    position: absolute;
+    top:-120px;
+    font-family: Raleway;
+    font-style: normal;
+    font-weight: normal;
+    font-size: 10px;
+    line-height: 14px;
+    font-feature-settings: 'pnum' on, 'lnum' on;
+    padding:10px 20px;
+}
+.table-title .grey-box {
+    display:none;
+}
+.table-title h1 {
+    font-family: DM Serif Display;
+    font-style: normal;
+    font-weight: normal;
+    font-size: 37px;
+    line-height: 51px;
+    letter-spacing: -0.01em;
+    text-transform: capitalize;
+    color: #A3915D;
+    margin:0;
+    margin-right:10px;
+}
+.table-date {
+    display: flex;
+    flex-direction: column;
+}
+.table-date h4 {
+    font-family: Raleway;
+    font-style: normal;
+    font-weight: normal;
+    font-size: 20px;
+    line-height: 23px;
+    color: #A3915D;
+    margin:0;
+}
+.table-date p {
+    font-family: DM Serif Display;
+    font-style: normal;
+    font-weight: normal;
+    font-size: 18px;
+    line-height: 25px;
+    letter-spacing: -0.01em;
+    text-transform: capitalize;
+    color: #000000;
+    margin:0;
+}
+.table-body {
+    width:76.16%;
+    max-width:952px;
+    display: flex;
+    flex-direction: column;
+    
+}
+.table-body thead, .table-body tbody  {
+    width:100%;
+    max-width:952px;
+    table-layout: auto;
+}
+
+.table-body tr {
+    border-bottom:1px solid #A3915D;
+    display: flex;
+    justify-content: space-between;
+    padding-top:15px;
+    padding-bottom:15px;
+    
+}
+.table-body th {
+    font-family: Raleway;
+    font-style: normal;
+    font-feature-settings: 'pnum' on, 'lnum' on;
+    color: #262626;
+    text-transform: capitalize;
+    font-weight: 700;
+}
+.table-body tr > th {
+    width:30%;
+}
+.table-body thead  th.other-dates{
+    font-size: 14px;
+    line-height: 22px;
+    text-align: center;
+    font-weight: normal;
+}
+
+.table-body tbody th {
+    font-size: 20px;
+    line-height: 23px;
+}
+
+.table-body tbody .value {
+    text-align: center;
+}
+.table-body tbody .years {
+    text-align: left;
+}
+.table-text {
+    width:76.16%;
+    max-width:952px;
+    margin-top:30px;
+}
+.table-text p {
+    font-family: Raleway;
+    font-style: normal;
+    font-weight: normal;
+    font-size: 14px;
+    line-height: 22px;
+    text-transform: capitalize;
+    font-feature-settings: 'pnum' on, 'lnum' on;
+    color: #262626;
+}

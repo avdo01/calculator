@@ -1,0 +1,59 @@
+.todays-rates-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content:center;
+    max-width:340px;
+    padding: 137px 33px;
+    background:rgba(46, 50, 65, 0.6);
+       
+}
+.todays-rates-title {
+     width:80%; 
+     margin-bottom:59px;
+}
+.todays-rates-title h1 {
+    text-align:center;
+    text-transform: uppercase;
+    font-family: Raleway;
+    font-style: normal;
+    font-weight: 700;
+    font-size: 37px;
+    line-height: 43px;
+    color: #FFFFFF;
+    margin:0;
+}
+.todays-rates-content {
+    color:white;
+    display: flex;
+    justify-content:space-between;
+    width:80%;
+}
+.todays-rates-content-column {
+    display:flex;
+    flex-direction:column;
+}
+.todays-rates-small-box h4 {
+    font-family: Raleway;
+    font-style: normal;
+    font-weight: normal;
+    font-size: 20px;
+    line-height: 23px;
+    text-transform: uppercase;
+    font-feature-settings: 'pnum' on, 'lnum' on;
+    color: #FFFFFF;
+    margin:0px 0px 20px 0px;
+}
+.todays-rates-small-box p {
+    font-family: DM Serif Display;
+    font-style: normal;
+    font-weight: normal;
+    font-size: 20px;
+    line-height: 27px;
+    text-transform: uppercase;
+    color: #FFFFFF;
+    margin:0px;
+}
+div.todays-rates-small-box:not(.last-small-box) {
+    margin-bottom:59px;
+}
