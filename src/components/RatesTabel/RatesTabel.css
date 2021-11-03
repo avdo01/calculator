@@ -1,0 +1,244 @@
+.table-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding-top: 60px;
+  padding-bottom: 60px;
+  border-top: 2px solid #a3915d;
+  width: 86.8%;
+  max-width: 1250px;
+  background-color: white;
+  margin-bottom: 90px;
+}
+.sifma {
+  margin-bottom: 60px;
+}
+.table-header {
+  display: flex;
+  justify-content: space-between;
+  width: 76.16%;
+  max-width: 952px;
+  margin-bottom: 60px;
+}
+
+.table-title {
+  display: flex;
+  align-items: center;
+}
+.table-title img {
+  width: 20px;
+  height: 20px;
+  margin-top: 5px;
+}
+.table-title .icon-class:hover {
+  display: flex;
+  flex-direction: column-reverse;
+  position: relative;
+}
+.table-title .icon-class:hover .grey-box {
+  display: block;
+  background: #727171;
+  color: white;
+  width: 275px;
+  position: absolute;
+  top: -120px;
+  font-family: Raleway;
+  font-style: normal;
+  font-weight: normal;
+  font-size: 10px;
+  line-height: 14px;
+  font-feature-settings: "pnum" on, "lnum" on;
+  padding: 10px 20px;
+}
+.table-title .grey-box {
+  display: none;
+}
+
+.table-title h1 {
+  font-family: DM Serif Display;
+  font-style: normal;
+  font-weight: normal;
+  font-size: 37px;
+  line-height: 51px;
+  letter-spacing: -0.01em;
+  text-transform: capitalize;
+  color: #a3915d;
+  margin: 0;
+  margin-right: 10px;
+}
+.table-date {
+  display: flex;
+  flex-direction: column;
+}
+.table-date h4 {
+  font-family: Raleway;
+  font-style: normal;
+  font-weight: normal;
+  font-size: 20px;
+  line-height: 23px;
+  color: #a3915d;
+  margin: 0;
+}
+.table-date p {
+  font-family: DM Serif Display;
+  font-style: normal;
+  font-weight: normal;
+  font-size: 18px;
+  line-height: 25px;
+  letter-spacing: -0.01em;
+  text-transform: capitalize;
+  color: #000000;
+  margin: 0;
+}
+
+.table-body {
+  width: 76.16%;
+  max-width: 952px;
+  display: flex;
+  flex-direction: column;
+}
+.table-body thead,
+.table-body tbody {
+  width: 100%;
+  max-width: 952px;
+  table-layout: auto;
+}
+
+.table-body tr {
+  border-bottom: 1px solid #a3915d;
+  display: flex;
+  justify-content: space-between;
+  padding-top: 15px;
+  padding-bottom: 15px;
+}
+.table-body th {
+  font-family: Raleway;
+  font-style: normal;
+  font-feature-settings: "pnum" on, "lnum" on;
+  color: #262626;
+  text-transform: capitalize;
+  font-weight: 700;
+}
+
+.table-body thead th.other-dates {
+  font-size: 14px;
+  line-height: 22px;
+  text-align: center;
+  font-weight: normal;
+}
+
+.table-body tbody th {
+  font-size: 20px;
+  line-height: 23px;
+}
+
+.table-body tbody .value {
+  text-align: center;
+}
+.table-body tbody .years {
+  text-align: left;
+}
+.table-text {
+  width: 76.16%;
+  max-width: 952px;
+  margin-top: 30px;
+}
+.table-text p {
+  font-family: Raleway;
+  font-style: normal;
+  font-weight: normal;
+  font-size: 14px;
+  line-height: 22px;
+  text-transform: capitalize;
+  font-feature-settings: "pnum" on, "lnum" on;
+  color: #262626;
+  margin: 0;
+}
+/*media query */
+@media only screen and (max-width: 1023px) {
+  .table-header {
+    width: 97%;
+    margin-bottom: 20px;
+  }
+  .table-title h1 {
+    font-size: 30px;
+    line-height: 38px;
+  }
+  .table-date p {
+    font-size: 16px;
+  }
+  .table-date h4 {
+    font-size: 18px;
+  }
+  .table-body {
+    width: 97%;
+  }
+  .table-container {
+    margin-bottom: 60px;
+    padding-top: 40px;
+    padding-bottom: 40px;
+    width: 90%;
+  }
+  .table-text {
+    width: 97%;
+  }
+}
+@media only screen and (min-width: 1024px) and (max-width: 1439px) {
+  .table-header {
+    width: 90%;
+  }
+  .table-body {
+    width: 90%;
+  }
+  .table-text {
+    width: 90%;
+  }
+}
+@media only screen and (max-width: 767px) {
+  .table-title .icon-class {
+    display: none;
+  }
+  .table-header {
+    width: 92%;
+  }
+  .table-body {
+    width: 92%;
+  }
+  .table-title h1 {
+    width: 100%;
+  }
+
+  /* show just current rates on mobile */
+  .table-body .other-dates {
+    display: none;
+  }
+  .table-body tbody tr th:nth-child(3),
+  .table-body tbody tr th:nth-child(4),
+  .table-body tbody tr th:nth-child(5) {
+    display: none;
+  }
+}
+@media only screen and (min-width: 768px) {
+  .table-body tr th:first-child {
+    width: 30%;
+    text-align: left;
+  }
+  .table-body thead tr th {
+    width: 17.5%;
+  }
+  .table-body tbody tr th {
+    width: 17.5%;
+  }
+}
+@media only screen and (min-width: 1440px) {
+  .table-body tr th:last-child {
+    text-align: right;
+  }
+  .table-body thead tr th {
+    width: 8.5%;
+  }
+  .table-body tbody tr th {
+    width: 8.5%;
+  }
+}

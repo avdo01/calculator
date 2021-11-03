@@ -1,5 +1,5 @@
 import React from "react";
-import './USTreasuries.css';
+import '../RatesTabel/RatesTabel.css';
 import icon from "../photos/title-icon.png";
 
 const USTreasuries = () => {

@@ -1,29 +1,30 @@
 .rates-container {
-    display: flex !important;
-    justify-content: center;
-    align-items: center;
-    flex-direction: column;
-    background: linear-gradient(180deg, #FFFFFF 0%, #F2EFE7 100%);
+  display: flex !important;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  background: linear-gradient(180deg, #ffffff 0%, #f2efe7 100%);
 }
+
 .print-container {
-    display: flex;
-    justify-content: center;
-    margin-bottom:60px;
-    cursor: pointer;
+  display: flex;
+  justify-content: center;
+  margin-bottom: 60px;
+  cursor: pointer;
 }
-.print-text input{
-    font-family: Raleway;
-    font-style: normal;
-    font-weight: bold;
-    font-size: 20px;
-    line-height: 23px;
-    color: #A3915D;
-    border:none;
-    background:transparent;
-    margin-right:5px;
-    cursor: pointer;
+.print-text input {
+  font-family: Raleway;
+  font-style: normal;
+  font-weight: bold;
+  font-size: 20px;
+  line-height: 23px;
+  color: #a3915d;
+  border: none;
+  background: transparent;
+  margin-right: 5px;
+  cursor: pointer;
 }
 .print-icon input {
-    width:18px;
-    height:22px;
+  width: 18px;
+  height: 22px;
 }
